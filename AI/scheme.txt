@@ -1,9 +1,0 @@
-to run the hello world program, type: 
-
->>>> gsi hello.scm
-
-to simply use the scheme language, apparently 
-
->>>> gsi
-
-should be just fine
