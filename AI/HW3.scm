@@ -30,3 +30,17 @@
 (display (= (get_el '(1 2 5) 1) 1))
 (display (equal? (get_el '(1 2 5) 6) #f))
 (display "\n")
+
+;;;Problem 3
+
+(define (el_or_lst lst x)
+  (if (equal? (get_el lst x) #f)
+      lst
+      x
+  )
+)
+
+(display (= (el_or_lst '(1 2 5 6) 5) 5)) 
+(display (= (el_or_lst '(1 2 5 6) 2) 2)) 
+(display (equal? (el_or_lst '(1 2 5 6) 7) '(1 2 5 6)))
+(display "\n") 
