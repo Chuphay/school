@@ -14,6 +14,28 @@ void print_binary(char a){
 
 }
 
+void print_16(char a, char b){
+  int i;
+  for(i = 0; i < 2*MAX; i++) {
+    if(i<MAX){
+      printf("%d", !!((a << i) & 128));
+    } else {
+      printf("%d", !!((b << i%MAX) & 128));
+    }
+  }
+  printf("\n");
+}
+
+void print16(char a[MAX]){
+  int i;
+  for(i = 0; i < 2*MAX; i++) {
+    printf("%d", a[i]);
+
+   
+  }
+  printf("\n");
+}
+
 void XOR(char a, char b){
   char z = a | b;
   char y = ~(a & b);
@@ -54,18 +76,37 @@ char and_net(char a, char b){
   print_binary(a);
   printf("b: ");
   print_binary(b);
-  double theta[2*MAX];
-  int i;
-  for( i = 0; i< 2*MAX; i++){
-    theta[i] = 20;
-  }
-  theta[2*MAX-1] = -30;
+  double theta[MAX][2*MAX];
+  char input[2*MAX];
 
-  return b;
+  int i;
+  for( i = 0; i < MAX; i++){
+    input[i] = !!((b << i) & 128);
+    input[i+MAX] = !!((a << i) & 128);
+  }
+
+  print16(input);
+
+  for( i = 0; i< MAX; i++){
+    theta[i][2*MAX] = -30;
+    theta[i][i+1] = 20;
+    theta[i][i+9] = 20;
+		     		     
+  }
+
+  printf("here: %d there: %f\n", input[1], theta[0][1]);
+  print_16(b,a);
+
+    //dot(  (double *)  input,theta );
+  return b ;
+
 }
 
 
+typedef struct node{
+  char out;
 
+} node;
 
 int main(){
 
@@ -95,6 +136,9 @@ int main(){
 
 
   and_net(120,19);
+
+  node d;
+  printf("size of empty struct: %d\n", sizeof(d));
 
 
   return 0;
