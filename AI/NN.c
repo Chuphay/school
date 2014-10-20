@@ -5,23 +5,10 @@
 #define MAX 8
 
 
-void print_binary(char a){
+void print_byte(char a){
   int i;
   for(i = 0; i < MAX; i++) {
       printf("%d", !!((a << i) & 128));
-  }
-  printf("\n");
-
-}
-
-void print_16(char a, char b){
-  int i;
-  for(i = 0; i < 2*MAX; i++) {
-    if(i<MAX){
-      printf("%d", !!((a << i) & 128));
-    } else {
-      printf("%d", !!((b << i%MAX) & 128));
-    }
   }
   printf("\n");
 }
@@ -29,22 +16,23 @@ void print_16(char a, char b){
 void print16(char a[MAX]){
   int i;
   for(i = 0; i < 2*MAX; i++) {
-    printf("%d", a[i]);
-
-   
+    printf("%d", a[i]); 
   }
   printf("\n");
 }
 
-void XOR(char a, char b){
-  char z = a | b;
-  char y = ~(a & b);
-  if((z&y) != (a^b)){
-    printf("yikes... XOR not working \n");
-    exit(1);
-  }
-  print_binary(z&y);
+void print_theta(double theta[MAX][2*MAX]){
+
+  printf("theta: \n");
+  int m,n;
+  for(m = 0; m < MAX; m++){
+    for(n = 0; n< 2*MAX; n++){
+      printf("%0.2f ", theta[m][n]);
+    }
+    printf("\n");
+  } 
 }
+ 
 
 double sigmoid(double z){
   if(z>4) return 1;
@@ -65,100 +53,196 @@ double dot(double *a, double *b){
 
 char and_net(char a, char b){
 
-  if((a & 128) || (b & 128)){
+  if((a & 128)){
     printf("hmm... I have a leading 1... exiting\n");
     exit(1);
   }
-  printf("a: ");
-  print_binary(a);
-  printf("shifted and adding 1: ");
+  if(b&128){
+    printf("Leading 1... un-qualified entry... but not going to exit\n");
+  }
+  
+  //shifting a over one step to create a bias
+  //our previous condition should have checked to make sure
+  //this was valid
   a = (a<<1)+1;
-  print_binary(a);
-  printf("b: ");
-  print_binary(b);
+
   double theta[MAX][2*MAX] = {};
   double input[2*MAX];
 
   int i;
-  for( i = 0; i < MAX; i++){
+  for(i = 0; i < MAX; i++){
     input[i] = !!((b << i) & 128);
     input[i+MAX] = !!((a << i) & 128);
   }
 
-  //printf("input: \n");
-  //print16(input);
 
-  for( i = 1; i< MAX; i++){
+  for(i = 1; i< MAX; i++){
     
-    theta[i][i-1] = 20;
+    theta[i][i] = 20;
     theta[i][i+7] = 20;
     theta[i][2*MAX-1] = -30;
 		     		     
   }
 
-  printf("theta: \n");
-  int m,n;
-  for(m = 0; m < MAX; m++){
-    for(n = 0; n< 2*MAX; n++){
-      printf("%0.2f ", theta[m][n]);
-    }
-    printf("\n");
-  } 
+  //these lines are to deal with the leading one in b
+  //it'll basically let the leading one pass
+  theta[0][0] = 40;
+  theta[0][2*MAX - 1] = -30;
 
-  printf("here: %f there: %f\n", input[1], theta[0][1]);
-  print_16(b,a);
+
+  //print_theta(theta);
+
   char out = 0;
   for (i = 0 ; i< MAX; i++){
     double temp;  
     temp = sigmoid(dot(  (double *)input,theta[i] ));
-    printf("%0.2f\n",temp);
+
     if(temp>0.5){
-      out = out|(1<<i);
+      out = out|(1<<(MAX-i-1));
     }
   }
-  print_binary(out);
+  //print_byte(out);
   return out ;
 
 }
 
 
-typedef struct node{
-  char out;
 
-} node;
+char or_net(char a, char b){
+
+  if((a & 128)){
+    printf("hmm... I have a leading 1... exiting\n");
+    exit(1);
+  }
+  if(b&128){
+    printf("Leading 1... un-qualified entry... but not going to exit\n");
+  }
+  
+  //shifting a over one step to create a bias
+  //our previous condition should have checked to make sure
+  //this was valid
+  a = (a<<1)+1;
+
+  double theta[MAX][2*MAX] = {};
+  double input[2*MAX];
+
+  int i;
+  for(i = 0; i < MAX; i++){
+    input[i] = !!((b << i) & 128);
+    input[i+MAX] = !!((a << i) & 128);
+  }
+
+
+  for(i = 1; i< MAX; i++){
+    
+    theta[i][i] = 30;
+    theta[i][i+7] = 30;
+    theta[i][2*MAX-1] = -20;
+		     		     
+  }
+
+  //these lines are to deal with the leading one in b
+  //it'll basically let the leading one pass
+  theta[0][0] = 40;
+  theta[0][2*MAX - 1] = -30;
+
+
+  //print_theta(theta);
+
+  char out = 0;
+  for (i = 0 ; i< MAX; i++){
+    double temp;  
+    temp = sigmoid(dot(  (double *)input,theta[i] ));
+
+    if(temp>0.5){
+      out = out|(1<<(MAX-i-1));
+    }
+  }
+  //print_byte(out);
+  return out ;
+
+}
+
+
+
+
+
+
+char not_net(char a, char b){
+  //char a is simply the control bit
+  //and can be safely ignored
+
+
+  if((a & 128)){
+    printf("hmm... I have a leading 1... exiting\n");
+    exit(1);
+  }
+  if(b&128){
+    printf("Leading 1... un-qualified entry... but not going to exit\n");
+  }
+  
+  //shifting a over one step to create a bias
+  //our previous condition should have checked to make sure
+  //this was valid
+  a = (a<<1)+1;
+
+  double theta[MAX][2*MAX] = {};
+  double input[2*MAX];
+
+  int i;
+  for(i = 0; i < MAX; i++){
+    input[i] = !!((b << i) & 128);
+    input[i+MAX] = !!((a << i) & 128);
+  }
+
+
+  for(i = 0; i< MAX; i++){
+    
+    theta[i][i] = -40;
+    //theta[i][i+7] = 30;
+    theta[i][2*MAX-1] = 30;
+		     		     
+  }
+
+
+
+  //print_theta(theta);
+
+  char out = 0;
+  for (i = 0 ; i< MAX; i++){
+    double temp;  
+    temp = sigmoid(dot(  (double *)input,theta[i] ));
+
+    if(temp>0.5){
+      out = out|(1<<(MAX-i-1));
+    }
+  }
+
+  return out ;
+}
+
+
+char xor_net(char a, char b){
+
+
+  char z = or_net(a, b);
+  char y = not_net(1,and_net(a, b));
+  return and_net(z,y);
+}
+
+
 
 int main(){
 
-  printf("on\n");
-  char c = '0';
-  printf("%d\n",c);
+  print_byte(and_net(39,121));
 
-  //char m = getchar();
-  char m = 0x30;
-  printf("%u\n", m-'0'-1);
-  
+  print_byte(39&121);
 
-  print_binary(6 << 2);
-  print_binary(24);
-  print_binary(255);
-  //print_binary(255<<1);
-  print_binary(255>>1);
-  print_binary(128);
-  print_binary(0x80);
-  print_binary(213);
-  print_binary(88);
-  XOR(213,88);
-  printf("sigmoid\n");
-  printf("%f, %f, %f\n", sigmoid(0), sigmoid(3.5), sigmoid(-5));
-  double aa[2*MAX] = {0,1,2,3,4,5,6,7};
-  printf("%d\n",dot(aa,aa) == 140);
-
-
-  and_net(121,19);
-
-  node d;
-  printf("size of empty struct: %d\n", sizeof(d));
-
-
+  print_byte(or_net(89,31));
+  print_byte(89|31);
+  print_byte(not_net(7,or_net(89,31)));
+  print_byte(~(89|31));
+  print_byte(xor_net(88,113));
+  print_byte(88^113);
   return 0;
 }
