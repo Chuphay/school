@@ -76,8 +76,8 @@ char and_net(char a, char b){
   print_binary(a);
   printf("b: ");
   print_binary(b);
-  double theta[MAX][2*MAX];
-  char input[2*MAX];
+  double theta[MAX][2*MAX] = {};
+  double input[2*MAX];
 
   int i;
   for( i = 0; i < MAX; i++){
@@ -85,20 +85,39 @@ char and_net(char a, char b){
     input[i+MAX] = !!((a << i) & 128);
   }
 
-  print16(input);
+  //printf("input: \n");
+  //print16(input);
 
-  for( i = 0; i< MAX; i++){
-    theta[i][2*MAX] = -30;
-    theta[i][i+1] = 20;
-    theta[i][i+9] = 20;
+  for( i = 1; i< MAX; i++){
+    
+    theta[i][i-1] = 20;
+    theta[i][i+7] = 20;
+    theta[i][2*MAX-1] = -30;
 		     		     
   }
 
-  printf("here: %d there: %f\n", input[1], theta[0][1]);
-  print_16(b,a);
+  printf("theta: \n");
+  int m,n;
+  for(m = 0; m < MAX; m++){
+    for(n = 0; n< 2*MAX; n++){
+      printf("%0.2f ", theta[m][n]);
+    }
+    printf("\n");
+  } 
 
-    //dot(  (double *)  input,theta );
-  return b ;
+  printf("here: %f there: %f\n", input[1], theta[0][1]);
+  print_16(b,a);
+  char out = 0;
+  for (i = 0 ; i< MAX; i++){
+    double temp;  
+    temp = sigmoid(dot(  (double *)input,theta[i] ));
+    printf("%0.2f\n",temp);
+    if(temp>0.5){
+      out = out|(1<<i);
+    }
+  }
+  print_binary(out);
+  return out ;
 
 }
 
@@ -135,7 +154,7 @@ int main(){
   printf("%d\n",dot(aa,aa) == 140);
 
 
-  and_net(120,19);
+  and_net(121,19);
 
   node d;
   printf("size of empty struct: %d\n", sizeof(d));
