@@ -1,32 +1,28 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-#define MAX 8
+#define BYTE 8
+#define SIZE 8+2*BYTE
+#define OUT 8
+#define IN BYTE + 16
 
 
 void print_byte(char a){
   int i;
-  for(i = 0; i < MAX; i++) {
+  for(i = 0; i < BYTE; i++) {
       printf("%d", !!((a << i) & 128));
   }
   printf("\n");
 }
 
-void print16(char a[MAX]){
-  int i;
-  for(i = 0; i < 2*MAX; i++) {
-    printf("%d", a[i]); 
-  }
-  printf("\n");
-}
-
-void print_theta(double theta[MAX][2*MAX]){
+void print_theta(double ** theta, int in, int out){
 
   printf("theta: \n");
   int m,n;
-  for(m = 0; m < MAX; m++){
-    for(n = 0; n< 2*MAX; n++){
+  for(m = 0; m < out; m++){
+    for(n = 0; n< in; n++){
       printf("%0.2f ", theta[m][n]);
     }
     printf("\n");
@@ -42,207 +38,106 @@ double sigmoid(double z){
   return 1.0/denom;
 } 
 
-double dot(double *a, double *b){
+double dot(double *a, double *b, int length){
   double out = 0;
   int i;
-  for(i = 0; i < 2*MAX; i++){
+  for(i = 0; i < length; i++){
     out += a[i]*b[i];
   }
   return out;
 } 
 
-char and_net(char a, char b){
-
-  if((a & 128)){
-    printf("hmm... I have a leading 1... exiting\n");
-    exit(1);
-  }
-  if(b&128){
-    printf("Leading 1... un-qualified entry... but not going to exit\n");
-  }
-  
-  //shifting a over one step to create a bias
-  //our previous condition should have checked to make sure
-  //this was valid
-  a = (a<<1)+1;
-
-  double theta[MAX][2*MAX] = {};
-  double input[2*MAX];
-
-  int i;
-  for(i = 0; i < MAX; i++){
-    input[i] = !!((b << i) & 128);
-    input[i+MAX] = !!((a << i) & 128);
-  }
-
-
-  for(i = 1; i< MAX; i++){
-    
-    theta[i][i] = 20;
-    theta[i][i+7] = 20;
-    theta[i][2*MAX-1] = -30;
-		     		     
-  }
-
-  //these lines are to deal with the leading one in b
-  //it'll basically let the leading one pass
-  theta[0][0] = 40;
-  theta[0][2*MAX - 1] = -30;
-
-
-  //print_theta(theta);
-
-  char out = 0;
-  for (i = 0 ; i< MAX; i++){
-    double temp;  
-    temp = sigmoid(dot(  (double *)input,theta[i] ));
-
-    if(temp>0.5){
-      out = out|(1<<(MAX-i-1));
-    }
-  }
-  //print_byte(out);
-  return out ;
-
-}
 
 
 
-char or_net(char a, char b){
-
-  if((a & 128)){
-    printf("hmm... I have a leading 1... exiting\n");
-    exit(1);
-  }
-  if(b&128){
-    printf("Leading 1... un-qualified entry... but not going to exit\n");
-  }
-  
-  //shifting a over one step to create a bias
-  //our previous condition should have checked to make sure
-  //this was valid
-  a = (a<<1)+1;
-
-  double theta[MAX][2*MAX] = {};
-  double input[2*MAX];
-
-  int i;
-  for(i = 0; i < MAX; i++){
-    input[i] = !!((b << i) & 128);
-    input[i+MAX] = !!((a << i) & 128);
-  }
-
-
-  for(i = 1; i< MAX; i++){
-    
-    theta[i][i] = 30;
-    theta[i][i+7] = 30;
-    theta[i][2*MAX-1] = -20;
-		     		     
-  }
-
-  //these lines are to deal with the leading one in b
-  //it'll basically let the leading one pass
-  theta[0][0] = 40;
-  theta[0][2*MAX - 1] = -30;
-
-
-  //print_theta(theta);
-
-  char out = 0;
-  for (i = 0 ; i< MAX; i++){
-    double temp;  
-    temp = sigmoid(dot(  (double *)input,theta[i] ));
-
-    if(temp>0.5){
-      out = out|(1<<(MAX-i-1));
-    }
-  }
-  //print_byte(out);
-  return out ;
-
-}
-
-
-
-
-
-
-char not_net(char a, char b){
+char neuron(char a, char b, char c, double **theta){
   //char a is simply the control bit
-  //and can be safely ignored
+  //it's for future flexibility
+  //and can be set to anything... for now
+  //we set it to to 128 so that its binary representation is
+  //10000000
+  //and we use this as something like
+  //an electrical ground against the inputs
 
-
-  if((a & 128)){
-    printf("hmm... I have a leading 1... exiting\n");
-    exit(1);
-  }
-  if(b&128){
-    printf("Leading 1... un-qualified entry... but not going to exit\n");
-  }
+  a = a|128;
   
-  //shifting a over one step to create a bias
-  //our previous condition should have checked to make sure
-  //this was valid
-  a = (a<<1)+1;
 
-  double theta[MAX][2*MAX] = {};
-  double input[2*MAX];
+  double input[SIZE];
 
   int i;
-  for(i = 0; i < MAX; i++){
-    input[i] = !!((b << i) & 128);
-    input[i+MAX] = !!((a << i) & 128);
+  for(i = 0; i < BYTE; i++){
+    input[i] = !!((a << i) & 128);
+    input[i+BYTE] = !!((b << i) & 128);
+    input[i+2*BYTE] = !!((c << i) & 128);
   }
-
-
-  for(i = 0; i< MAX; i++){
-    
-    theta[i][i] = -40;
-    //theta[i][i+7] = 30;
-    theta[i][2*MAX-1] = 30;
-		     		     
-  }
-
-
-
-  //print_theta(theta);
 
   char out = 0;
-  for (i = 0 ; i< MAX; i++){
+  for (i = 0 ; i< BYTE; i++){
     double temp;  
-    temp = sigmoid(dot(  (double *)input,theta[i] ));
+    temp = sigmoid(dot(input, theta[i], SIZE));
 
     if(temp>0.5){
-      out = out|(1<<(MAX-i-1));
+      out = out|(1<<(BYTE-i-1));
     }
   }
 
   return out ;
 }
 
+typedef struct net{
+  int inputs;
+  int outputs;
+  int length;
+  int *layers;
+  double ***theta;
+  char name[16];
+} net;
 
-char xor_net(char a, char b){
+net make_net(int a,int b , int c){
 
+ double ***theta = malloc(OUT*sizeof(double **));
+ int i,j;
+ for(j = 0; j<IN; j++){
+   theta[j] = malloc(3*sizeof(double));
+   for(i= 0;i<OUT;i++){
+    theta[j][i] = malloc(IN*sizeof(double));
+  }
+ }
+  for(i = 0; i< BYTE; i++){
+    
+    theta[0][i][i+BYTE] = 30;
+    theta[0][i][i+2*BYTE] = 30;
+    theta[0][i][0] = -20;
+		     		     
+  }
 
-  char z = or_net(a, b);
-  char y = not_net(1,and_net(a, b));
-  return and_net(z,y);
-}
+  net out; //= malloc(sizeof(net));
+ out.theta = theta;
+ return out;
+} 
+
 
 
 
 int main(){
+  net try = make_net(2,1,4);
 
-  print_byte(and_net(39,121));
+  int i;
+  double **theta = malloc(OUT*sizeof(double *));
+  for(i= 0;i<OUT;i++){
+    theta[i] = malloc(IN*sizeof(double));
+  }
+  for(i = 0; i< BYTE; i++){
+    
+    theta[i][i+BYTE] = 30;
+    theta[i][i+2*BYTE] = 30;
+    theta[i][0] = -20;
+		     		     
+  }
 
-  print_byte(39&121);
 
-  print_byte(or_net(89,31));
   print_byte(89|31);
-  print_byte(not_net(7,or_net(89,31)));
-  print_byte(~(89|31));
-  print_byte(xor_net(88,113));
-  print_byte(88^113);
+  print_byte( neuron(1,89,31,theta));
+
   return 0;
 }
