@@ -19,7 +19,7 @@ def repeat(times):
 from IPython.display import HTML
 
 def hide():
-    """I found the code for this feature here: http://blog.nextgenetics.net/?e=102"""
+    """I found some of the code for this feature here: http://blog.nextgenetics.net/?e=102"""
     return HTML('''<script>
 code_show=true; 
 function code_toggle() {
