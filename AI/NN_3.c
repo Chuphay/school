@@ -151,7 +151,7 @@ srand(time(NULL));
   print_byte(89|31);
 
   double **this = make_theta();
-  this[0][0] = 2;
+  //this[0][0] = 2;
 
   print_byte(neuron(1,89,31,this));
 

@@ -17,12 +17,12 @@ void print_byte(char a){
   printf("\n");
 }
 
-void print_theta(double ** theta, int in, int out){
+void print_theta(double ** theta){
 
   printf("theta: \n");
   int m,n;
-  for(m = 0; m < out; m++){
-    for(n = 0; n< in; n++){
+  for(m = 0; m < BYTE; m++){
+    for(n = 0; n< SIZE; n++){
       printf("%0.2f ", theta[m][n]);
     }
     printf("\n");
@@ -55,7 +55,7 @@ int value = array[index(a, b, c)];
 */
 
 
-char neuron(char a, char b, char c, double **theta){
+char activate_neuron(char a, char b, char c, double **theta){
   //char a is simply the control bit
   //it's for future flexibility
   //and can be set to anything... for now
@@ -95,40 +95,16 @@ char neuron(char a, char b, char c, double **theta){
 }
 
 typedef struct net{
+  //look to make_net for explanation
   int length;
+  int size;
   int *layers;
   double *theta;
   char name[16];
 } net;
 
-net *make_net(int length, int *layers){
-
- double *theta = malloc(OUT*8*sizeof(double));
-
-
-  net *out = malloc(sizeof(net));
-
-  out->length = length;
-  out->layers = layers;
- out->theta = theta;
- return out;
-} 
-
-
-void free_net(net *x){
-  printf("here\n");
-
- 
-}
 
 double **make_theta(){
-
-
-   printf("%f\n",rand()/((double)RAND_MAX));
-
-
-
-
   double **out = malloc(BYTE*sizeof(double *));
   int i,j;
   for(i = 0; i < BYTE; i++){
@@ -140,20 +116,112 @@ double **make_theta(){
   return out;
 }
 
+double **make_or(){
+  double **out = malloc(BYTE*sizeof(double *));
+  int i;
+  for(i = 0; i < BYTE; i++){
+    out[i] = malloc(SIZE*sizeof(double));
+    
+    out[i][0] = -20;
+    out[i][BYTE+i] = 30;
+    out[i][2*BYTE + i] = 30;
+    
+  }
+  return out;
+}
+
+double **make_and(){
+  double **out = malloc(BYTE*sizeof(double *));
+  int i;
+  for(i = 0; i < BYTE; i++){
+    out[i] = malloc(SIZE*sizeof(double));
+    
+    out[i][0] = -30;
+    out[i][BYTE+i] = 20;
+    out[i][2*BYTE + i] = 20;
+    
+  }
+  return out;
+}
+
+
+net *make_net(int size, int length, int *layers){
+  //for example if the layers are like 2x2x1
+  //then the size would be 5
+  //truthfully length (or size) is reduntant,
+  //but it just seems easier to pass this extra information
+  int i;
+  //the reason we are subtracting layers[0]
+  //is because 2X2X1 is two inputs, two hidden neurons, and one neuron to sum
+  //therefor there are really only 3 neurons
+  double *theta = malloc((size-layers[0])*sizeof(double **));
+  for( i = 0 ; i< (size-layers[0]); i++){
+    theta[i] = **make_theta();
+  }
+
+  net *out = malloc(sizeof(net));
+
+  out->size = size;
+  out->layers = layers;
+ out->theta = theta;
+ out->length = length;
+ return out;
+} 
+
+
+void free_net(net *x){
+  printf("here\n");
+
+}
+
+char activate_net(char a, char b, char c, net *x){
+  printf("activating the net\n");
+  printf("%d\n", x->size);
+
+  int i;
+  double **or = make_or();
+  for(i = x->length-2 ; i>0 ;i--){
+    printf("layer: %d\n",i);
+    printf("length:  %d\n", x->layers[i]);
+
+    b = activate_neuron(a,b,c,or);
+    c = activate_neuron(a,b,c,or);
+    //from here how does one solve this problem?
+    //it's not so easy at all
+    //I could easily calculate and then save somewhere
+    //and then call back
+    //or I could do a recursive algorithm
+}
+  char out;
+  out = activate_neuron(a,b,c,or);
+
+  //here's what I'm doing from now on
+  //Im going to assume that the net is of the form
+  //2X2X2...2X2X1
+  //this is C
+  //and I'm no expert. 
+  //And most importantly,
+  //Let's make sure we can finish this project!!
+  return out;
+}
+
+
 int main(){
 
 srand(time(NULL));
 
   int layers[3] = {2,2,1};
-  net *try = make_net(3,layers);
+  net *try = make_net(5,3,layers);
+  print_byte(activate_net(0,19,31,try));
+  print_byte(219|31);
 
+  //double **this = make_theta();
+  double **or = make_or();
 
-  print_byte(89|31);
-
-  double **this = make_theta();
-  this[0][0] = 2;
-
-  print_byte(neuron(1,89,31,this));
+  print_byte(activate_neuron(1,219,31,or));
+  double **and = make_and();
+  print_byte(activate_neuron(0,219,31,and));
+  print_byte(219&31);
 
   free_net(try);
 
