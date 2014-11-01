@@ -1,7 +1,10 @@
-#include <time.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
+
+
 
 #define BYTE 8
 #define SIZE 8+2*BYTE
@@ -55,21 +58,7 @@ int value = array[index(a, b, c)];
 */
 
 
-char neuron(char a, char b, char c, double **theta){
-  //char a is simply the control bit
-  //it's for future flexibility
-  //and can be set to anything... for now
-  //we set it to to 128 so that its binary representation is
-  //10000000
-  //and we use this as something like
-  //an electrical ground against the inputs
-
-  //char b and char c are the inputs
-
-  //x and y describe the array theta
-  //with x characterizing the output
-  //and y characterizing the input
-
+char neuron(char a, char b, char c, double *theta){
   a = a|128;
 
   double input[SIZE];
@@ -82,9 +71,9 @@ char neuron(char a, char b, char c, double **theta){
   }
 
   char out = 0;
-  for (i = 0 ; i< BYTE; i++){
+  for (i = 0 ; i< 3*BYTE; i = i + BYTE){
     double temp;  
-    temp = sigmoid(dot(input, theta[i], SIZE));
+    temp = sigmoid(dot(input, &theta[i], SIZE));
 
     if(temp>0.5){
       out = out|(1<<(BYTE-i-1));
@@ -101,61 +90,28 @@ typedef struct net{
   char name[16];
 } net;
 
-net *make_net(int length, int *layers){
-
- double *theta = malloc(OUT*8*sizeof(double));
 
 
-  net *out = malloc(sizeof(net));
-
-  out->length = length;
-  out->layers = layers;
- out->theta = theta;
- return out;
-} 
-
-
-void free_net(net *x){
-  printf("here\n");
-
- 
-}
-
-double **make_theta(){
-
-
-   printf("%f\n",rand()/((double)RAND_MAX));
-
-
-
-
-  double **out = malloc(BYTE*sizeof(double *));
-  int i,j;
-  for(i = 0; i < BYTE; i++){
-    out[i] = malloc(SIZE*sizeof(double));
-    for(j = 0; j < SIZE; j++){
-      out[i][j] = rand()/((double)RAND_MAX) -0.5;
-    }
-  }
-  return out;
-}
 
 int main(){
 
 srand(time(NULL));
-
-  int layers[3] = {2,2,1};
-  net *try = make_net(3,layers);
-
-
+ 
+  printf("%f\n",rand()/((double)RAND_MAX));
   print_byte(89|31);
 
-  double **this = make_theta();
-  this[0][0] = 2;
+  double *this = malloc(24*sizeof(double));
+  this[0] = 2;
+ for(i = 1; i< MAX; i++){
+    
+    theta[i][i] = 30;
+    theta[i][i+7] = 30;
+    theta[i][2*MAX-1] = -20;
+		     		     
+  }
 
   print_byte(neuron(1,89,31,this));
 
-  free_net(try);
 
   return 0;
 }
