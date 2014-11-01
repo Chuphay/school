@@ -190,15 +190,20 @@ void free_net(net *x){
 
 char activate_net(char a, char b, char c, net *x){
   printf("activating the net\n");
-
+  printf("%d\n", x->size);
+  print_byte(b);
+  print_byte(c);
 
   int i;
-  // double **or = make_or();
-  double **and = make_and();
-  //double **not = make_not();
-  for(i = 0 ; i < x->length ;i++){
+  double **or = make_or();
+ double **and = make_and();
+ //print_theta(and);
+ double **not = make_not();
+  for(i = x->length-2 ; i>0 ;i--){
+    printf("layer: %d\n",i);
+    printf("length:  %d\n", x->layers[i]);
 
-    char b_new = activate_neuron(a,b,c,and);
+    char b_new = activate_neuron(a,b,c,or);
     c = activate_neuron(a,b,c,and);
     b = b_new;
 
@@ -212,7 +217,8 @@ char activate_net(char a, char b, char c, net *x){
 }
   char out;
 
-  out = activate_neuron(a,b,c,and);
+  printf("wow\n");
+  out = activate_neuron(a,b,activate_neuron(a,c,a,not),and);
 
   //here's what I'm doing from now on
   //Im going to assume that the net is of the form
