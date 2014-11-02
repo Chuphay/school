@@ -38,10 +38,10 @@ double sigmoid(double z){
   return 1.0/denom;
 } 
 
-double dot(double *a, double *b, int length){
+double dot(double *a, double *b){
   double out = 0;
   int i;
-  for(i = 0; i < length; i++){
+  for(i = 0; i < SIZE; i++){
     out += a[i]*b[i];
   }
   return out;
@@ -84,7 +84,7 @@ char activate_neuron(char a, char b, char c, double **theta){
   char out = 0;
   for (i = 0 ; i< BYTE; i++){
     double temp;  
-    temp = sigmoid(dot(input, theta[i], SIZE));
+    temp = sigmoid(dot(input, theta[i]));
 
     if(temp>0.5){
       out = out|(1<<(BYTE-i-1));
@@ -194,13 +194,11 @@ net *make_net(int size, int length, int *layers){
 
 
 void free_net(net *x){
-  printf("here\n");
+  printf("claning up....?\n");
 
 }
 
 char activate_net(char a, char b, char c, net *x){
-  printf("activating the net\n");
-
 
   int i;
   // double **or = make_or();
@@ -240,9 +238,43 @@ char activate_net(char a, char b, char c, net *x){
   return out;
 }
 
-void train(char a, char b, char out, net *x){
+void train(char a, char b, char c, char out, net *x, int epochs){
+  printf("inside\n");
+  double storage[x->size - 2][BYTE];
+  //temp is here to hold the intermediate values
 
 
+  //so i have to repeat my activate-neuron code
+  //because there I was simply returning zeros and ones
+  //but apparently to use the backpropagation algorithm
+  //I actually need floating point numbers
+  a = a|128;
+
+  double input[SIZE];
+
+  int i,n;
+
+
+    for(n = 0; n < BYTE; n++){
+      input[n] = !!((a << n) & 128);
+      input[n+BYTE] = !!((b << n) & 128);
+      input[n+2*BYTE] = !!((c << n) & 128);
+
+  for(i = 0 ; i < x->length - 2;i++){
+   
+    char b_new = activate_neuron(a,b,c,x->theta[2*i].t);
+    c = activate_neuron(a,b,c,x->theta[2*i+1].t);
+    b = b_new;
+    storage[2*i][n] = sigmoid(dot(input,x->theta[2*i+1].t[n]));;
+    storage[2*i+1][n] = sigmoid(dot(input, x->theta[2*i+1].t[n]));
+
+}
+
+
+  storage[x->size-3][n] =  sigmoid(dot(input, x->theta[x->size -3].t[n]));
+
+    }
+  printf("%f\n",storage[x->size-3][0]);
 }
 
 
@@ -255,6 +287,7 @@ int main(){
   net *try = make_net(7,4,layers);
   print_byte(activate_net(0,12,75,try));
   print_byte(12^75);
+  train(0,12,75,12^75,try,10);
 
 
   free_net(try);
