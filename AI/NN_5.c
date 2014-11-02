@@ -177,8 +177,6 @@ net *make_net(int size, int length, int *layers){
   thet *theta = malloc((size-layers[0])*sizeof(thet *));
   for( i = 0 ; i< (size-layers[0]); i++){
     //printf("make i: %d\n",i);
-    //had to add in this awkward t thing
-    //still not sure how to reference a 2-d matrix in an array
     theta[i].t = make_theta();
     //print_theta(theta[i].t);
   }
@@ -240,22 +238,25 @@ char activate_net(char a, char b, char c, net *x){
   return out;
 }
 
-void train(char a, char b, char out, net *x){
-
-
-}
-
-
 
 int main(){
 
-  srand(time(NULL));
+srand(time(NULL));
 
-  int layers[4] = {2,2,2,1};
+ int layers[4] = {2,2,2,1};
   net *try = make_net(7,4,layers);
   print_byte(activate_net(0,12,75,try));
   print_byte(12^75);
+  //print_byte(219|31);
 
+  //double **this = make_theta();
+  //double **or = make_or();
+
+  //print_byte(activate_neuron(1,12,75,or));
+  //double **and = make_and();
+  // print_theta(and);
+  //print_byte(activate_neuron(0,12,75,and));
+  //print_byte(12&75);
 
   free_net(try);
 

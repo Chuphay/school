@@ -1,0 +1,31 @@
+The original aim of this paper was to train a network to be able to do floating point calculations. But I have not been able to do that yet.
+
+chaining inputs and outputs so that's it can handle digits greater than one byte. I haven't figured out how to do this yet.
+
+sigmoid function dopeness. you have to do discrete calculus rather than normal calculus. It was easiest to implentmeant this as floating point, so for expediances sake I have not worked on this further. 
+
+
+Batch / Online learning
+
+The last thing I want to go over is the difference between batch learning and stochastic or on-line learning.
+Stochastic learning occurs when the neuron weights are updated after each individual piece of data is passed through the system. The FFNN therefore changes with every piece of data and is in a constant state of change during training. This is the way we’ve been doing it up to now.
+Batch Learning on the other hand stores each neuron weight change when it occurs, and only at the end of each epoch does it update the weights with the net change over the training set. This means the neural network will only update once at the end of each epoch. Implementation wise this change is minor as all you need to do is just store the weight changes (the delta w values) and just update the weights at the end of the epoch.
+The effects of this I’ll leave up to you guys to discover for yourselves. I can’t spoon feed you everything.
+
+The Neuron Error Gradients
+
+Okay so obviously we need to update the weights in our neural network to give the correct output at the output layer. This forms the basis of training the neural network. We will make use of back-propagation for these weight updates. This just means input is fed in, the errors calculated and filtered back though the network making changes to the weights to try reduce the error.
+The weight changes are calculated by using the gradient descent method. This means we follow the steepest path on the error function to try and minimize it. I’m not going to go into the math behind gradient descent, the error function and so on since its not really needed, simply put all we’re doing is just taking the error at the output neurons (Desired value – actual value) and multiplying it by the gradient of the sigmoid function.  If the difference is positive we need to move up the gradient of the activation function and if its negative we need to move down the gradient of the activation function.
+
+This is the formula to calculate the basic error gradient for each output neuron k:
+
+delta_k = y_k(1-y_k)(d_k -y_k)
+
+where y_k is the value at the output neuron k
+and d_k is the desired value at the output neuron k
+
+There is a difference between the error gradients at the output and hidden layers. The hidden layer’s error gradient is based on the output layer’s error gradient (back propagation) so for the hidden layer the error gradient for each hidden neuron is the gradient of the activation function multiplied by the weighted sum of the errors at the output layer originating from that neuron (wow, getting a bit crazy here eh?):
+
+delta_j = y_j(1-y_j) \sum_{k=1}^{n} w_{jk}\delta_k
+
+
