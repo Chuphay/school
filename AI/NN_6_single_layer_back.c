@@ -304,15 +304,7 @@ void train(char a, char b, char c, char out, net *x, int epochs){
     }
     for(n = 0; n< epochs ; n++){
       for(i=0; i<BYTE; i++){
-	//first the output layer
-	*(x->theta[x->size -3].t[i]) -= 0.5*(storage[x->size-3][i] - !!((out << i) & 128));
-
-      }
-	int j;
-      for(j =  x->length - 2; j>0; j--){
-	//now the hidden layers
-	  printf("going backwards... %d\n",j);
-	 
+	*(x->theta[x->size -3].t[i]) -= 0.5*(storage[x->size-3][i] - !!((out << i) & 128)); 
       }
     }
 					 					  
@@ -323,23 +315,19 @@ void train(char a, char b, char c, char out, net *x, int epochs){
 int main(){
 
   srand(time(NULL));
-  
+  /*
   int layers[4] = {2,2,2,1};
   net *try = make_net(7,4,layers);
-  printf("try length: %d\n", try->length);
   print_byte(activate_net(0,12,75,try));
   print_byte(12^75);
   train(0,12,75,12^75,try,10);
-  
+  */
   int layers2[2] = {2,1};
   net *try2 = make_net(3,2,layers2);
   print_byte(activate_net(0,12,75,try2));
   print_byte(12|75);
-  train(0,12,75,12|75,try2,10);
-  train(0,129,87,129|87,try2,10);
-  print_byte(activate_net(0,129,87,try2));
-  print_byte(129|87);
-  
+  train(0,12,75,12|75,try2,100);
+ train(0,12,75,12|75,try2,10);
 
 
   //free_net(try);
