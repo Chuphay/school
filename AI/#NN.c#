@@ -317,7 +317,15 @@ void train(char a, char b, char c, char out, net *x, int epochs){
 	  //at this point, I feel so relieved that I decided to limit
 	  //the network to shapes like 2X2X2X1
 	  if(x->layers[j+1] == 1){
+	    //this is some complicated equation,
+	    //but what's worse is that the next level is even more 
+	    //complicated.
+
+
+
 	  } else if (x->layers[j+1] == 2){
+
+
 	  } else {
 	    //this is just some check code...
 	    //if you see this, there has been an error...
