@@ -305,19 +305,79 @@ void train(char a, char b, char c, char out, net *x, int epochs){
 
     }
     for(n = 0; n< epochs ; n++){
+	//this code is meant to support the hidden layers
+	//read what it says there
+      double error1[BYTE];
+      double error2[BYTE];
+
       for(i=0; i<BYTE; i++){
 	//first the output layer
 	*(x->theta[x->size -3].t[i]) -= RATE*(storage[x->size-3][i] - !!((out << i) & 128));
+	error1[i] = storage[x->size-3][i] - !!((out << i) & 128);
+	error2[i] = 0;
+
+	//this code is meant to support the hidden layers
+	//read what it says there
 
       }
 	int j;
       for(j =  x->length - 2; j>0; j--){
 	//now the hidden layers
-
+	  printf("going backwards... %d\n",j);
 	  //at this point, I feel so relieved that I decided to limit
 	  //the network to shapes like 2X2X2X1
 	  if(x->layers[j+1] == 1){
+	    //this is some complicated equation,
+	    //but what's worse is that layers with 2 outputs are even more 
+	    //complicated.
+	    //I found the complicated equation from
+	    //http://www.cim.mcgill.ca/~jer/courses/ai/readings/backprop.pdf
+
+	    //\delta_j = a_j(1 - a_j) \sum_k \delta_k \omega_{kj}
+	    int m;
+	    for(m = 0; m<BYTE; m++){
+
+	      //*(x->theta[x->size -3].t[m]) -= RATE*(storage[x->size-3][m] - !!((out << m) & 128));
+
+	double *activation_top = storage[x->size -5];
+	double *activation_bottom = storage[x->size -4];
+	//double *top_theta_to_output = 
+	//oh god... I forgot all about all those 24 theta numbers
+	//I'll have to first figure this out with pen and paper
+	error1[m] = error1[m]*activation_top[m]*(1 - activation_top[m])*error1[m]*(*x->theta[x->size -3].t[m]);
+	      printf("error1: %f j: %d\n", error1[m],j);
+	      printf("error2: %f\n",error2[m]); 
+	      error1[m] =0;
+	      error2[m] = 0;
+	    }
+	    
+	    //where a_j is the activation here and now
+	    //delta_k is the previous level error
+	    //and omega is between now and the past 
+	    //(but remember we're going backwards)
+
+	    //and now we change the weights from now going into the future
+	    //(again we're going backwards)
+	    //hmmm...
+	    //I can see a problem here
+	    //we're changing the weights 
+	    //and then in the next iteration we are using those weights
+	    //in our calculations...
+	    //oh well... not enough time to dwell on this
+
+	    //\omega_{ij} <-- \omega_{ij} + \eta \delta_j a_i
+	    
+	    //where here a_i is the activation from the future
+	    //and eta is the learning rate, to be adjusted later
+
+
+
+
+
+
 	  } else if (x->layers[j+1] == 2){
+
+
 	  } else {
 	    //this is just some check code...
 	    //if you see this, there has been an error...
