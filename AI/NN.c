@@ -263,6 +263,8 @@ void train(char a, char b, char c, char out, net *x, int epochs){
   double RATE = 0.5;
   printf("inside\n");
   double storage[x->size - 2][BYTE];
+  char char_stor[x->size -2];
+  double input_storage[x->size -2][SIZE];
   //temp is here to hold the intermediate values
 
 
@@ -285,14 +287,24 @@ void train(char a, char b, char c, char out, net *x, int epochs){
 	char b_new = activate_neuron(a,b,c,x->theta[2*i].t);
 	c = activate_neuron(a,b,c,x->theta[2*i+1].t);
 	b = b_new;
+	char_stor[2*i] = b;
+	char_stor[2*i+1] = c;
 	for(n=0; n<BYTE; n++){
-	  storage[2*i][n] = sigmoid(dot(input,x->theta[2*i+1].t[n]));;
+	  storage[2*i][n] = sigmoid(dot(input,x->theta[2*i].t[n]));;
 	  storage[2*i+1][n] = sigmoid(dot(input, x->theta[2*i+1].t[n]));
 	}
 	input = make_input(a,b,c);
+	for(n =0 ; n<SIZE; n++){
+	  input_storage[i][n] = input[n];
+	}
+	printf("i: %d\n",i);
+
+
       }
 
       //our final output layer
+
+      char_stor[x->size-3] = activate_neuron(a,b,c, x->theta[x->size -3].t);
       for(n=0; n<BYTE; n++){
 
 	storage[x->size-3][n] =  sigmoid(dot(input, x->theta[x->size -3].t[n]));
@@ -304,6 +316,8 @@ void train(char a, char b, char c, char out, net *x, int epochs){
 
 
     }
+    printf("char_stor: ");
+    print_byte(char_stor[x->size-3]);
     for(n = 0; n< epochs ; n++){
 	//this code is meant to support the hidden layers
 	//read what it says there
@@ -312,9 +326,17 @@ void train(char a, char b, char c, char out, net *x, int epochs){
 
       for(i=0; i<BYTE; i++){
 	//first the output layer
-	*(x->theta[x->size -3].t[i]) -= RATE*(storage[x->size-3][i] - !!((out << i) & 128));
-	error1[i] = storage[x->size-3][i] - !!((out << i) & 128);
+	//let's first calculate delta
+	//at the output layer, this is easy:
+	//\delta = (t_j-a_j)*a_j*(1 - a_j)
+	error1[i] = (!!((out << i) & 128) - storage[x->size-3][i])*(storage[x->size-3][i])*(1-storage[x->size-3][i]);
 	error2[i] = 0;
+
+	int j_here;
+	for(j_here = 0 ; j_here <SIZE ; j_here++){
+	  x->theta[x->size -3].t[i][j_here] += RATE*error1[i]*input_storage[x->length - 3][j_here];
+	}
+
 
 	//this code is meant to support the hidden layers
 	//read what it says there
