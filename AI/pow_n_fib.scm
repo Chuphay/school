@@ -1,0 +1,36 @@
+(define (fib n)
+  (define (fib_iter a b count)
+    (if (< count 0) 
+	a
+	(fib_iter (+ a b) a (- count 1))
+	)
+  )
+  (fib_iter 0 1 n)
+)
+
+(define (pow x n)
+  (define (pow_iter a b count)
+    (if (< count 1)
+	a
+	(pow_iter (* a b) b (- count 1))
+	)
+    )
+  (if (< n 0)
+      (/ 1 (pow_iter 1 x (- n)))
+      (pow_iter 1 x n)
+      )
+)
+
+
+
+(display (pow 2 -3))
+(display " ")
+(display (pow 2 -4))
+(display "\n")
+(print (fib 1))
+(print (fib 2))
+(print (fib 3))
+(print (fib 4))
+(print (fib 5))
+(print (fib 6))
+(print "\n")
