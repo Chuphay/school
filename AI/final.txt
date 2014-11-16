@@ -1,6 +1,0 @@
-The original aim of this paper was to train a network to be able to do floating point calculations. But I have not been able to do that yet.
-
-chaining inputs and outputs so that's it can handle digits greater than one byte. I haven't figured out how to do this yet.
-
-sigmoid function dopeness. you have to do discrete calculus rather than normal calculus. It was easiest to implentmeant this as floating point, so for expediances sake I have not worked on this further. 
-
