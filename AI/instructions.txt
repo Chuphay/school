@@ -22,4 +22,13 @@ and typing swipl will get you to the prompt as well...
 
 but i can't make heads or tails of it
 
+getting better at it now
+
+>>> swipl
+
+?- consult('HW4.pl').
+
+?- ancestor(david, X).
+
+
 
