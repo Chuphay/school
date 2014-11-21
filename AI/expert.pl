@@ -16,16 +16,15 @@ needles_more_than_six_in_bunch(yes).
 % needles_three_sided(neg). 
 
 
-C := 5.
-info([A,B,C]).
 
-
+% http://stackoverflow.com/questions/5107745/user-input-how-can-we-do-it
 % http://stackoverflow.com/questions/9564614/prolog-expert-system-is-so-hard 
+
 ask(A,V):-
-  write(A:V),                       % if we get here, we need to ask.
+  write(A:V),                       
   write('? (yes or no): '),
-  read(Y),                          % get the answer
-  (asserta(known(Y,A,V)),           % remember it so we dont ask again.
+  read(Y),                         
+  (asserta(known(Y,A,V)),           % this remembers the answer, very useful for a nice user interface
      Y = yes
   ). 
 
