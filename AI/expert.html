@@ -12,50 +12,87 @@ var node = function (string, nodeT, nodeF) {
         }
     };
 };
+
 function main(node){
     i = 0;
     while(true){
-        node = node.ask()
-        console.log(node.string)
-        if(node == true){
-            console.log("not sure why we are here")
-            break;
-        }
-        if(node == null){
-            console.log("null?")
-            break;
-        }
-        if(node.nodeT == true){
-            console.log(node.string);
-            break
-         }
-        if (i> 10){
+        if (i> 20){
             console.log("Looks like things ran away :(");
             break;
         }
-    i++;
-  }
+        node = node.ask();
+        if(node === true){
+            console.log("not sure why we are here");
+            break;
+        }
+        if(node === null){
+            console.log("null?");
+            break;
+        }
+        if(node.nodeT === true){
+            console.log(node.string);
+            break;
+        }
+i++;
+}
 }
 
-var True = true
+var True = true;
 
-pine = new node("PINE!!!", True, True)
-larch = new node("LARCH!!!",True, True)
-cedar = new node("CEDAR!!!", True, True)
-sequoia = new node("GIANT SEQUOIA!!!", True, True)
-juniper = new node("JUNIPER!!!",True,True)
-cypress = new node("CYPRES!!!",True, True)
-berries = new node("Are there small berry-like fruits?", juniper, cypress)
-giant = new node("Is the tree enormously tall?", sequoia, berries)
-scales = new node("Do the end of the branches look like they have been ironed flat?", cedar, giant)
-bundles = new node("Do the bundles have fewer than six needles?", pine, larch)            
-needle = new node("Needles. Are the needles bundled in a pack?", bundles, null) 
-deciduous = new node("Deciduous trees are leafless in the winter.\nTT ",True, True)
-coniferous = new node("Confirous trees or evergreens keep their leaves all winter.\n Do the leaves have scales?", scales, needle)
-needle_scales = new node("Does the tree have needles or scale-like leaves?" , coniferous, deciduous)
-fail = new node("Fail... This is a tree-classifying expert system...\nExiting.", True, True)
-tree = new node("Are you trying to classify a tree?", needle, fail)
-intro = new node("Welcome!\nPlease answer the questions with either a yes or a no.\nAre you ready?", tree, fail)
+pine = new node("PINE!!!", true, true);
+larch = new node("LARCH!!!", true, true);
+cedar = new node("CEDAR!!!", true, true);
+sequoia = new node("GIANT SEQUOIA!!!", true, true);
+juniper = new node("JUNIPER!!!", true, true);
+cypress = new node("CYPRES!!!", true, true);
+fir = new node("FIR!!!", true, true);
+spruce = new node("SPRUCE!!!", true, true);
+redwood = new node("REDWOOD!!!", true, true);
+douglas = new node("DOUGLASS!!!", true, true);
+walnut = new node("WALNUT!!!", true, true);
+pepper = new node("PEPPER!!!", true, true);
+ailanthus = new node("AILANTHUS!!", true, true);
+buckeye = new node("CALIFORNIA BUCKEYE!!!", true, true);
+boxelder = new node("BOXELDER", true, true);
+hop = new node("HOP TREE", true, true);
+elder_berry = new node("ELDER BERRY", true, true);
+ash = new node("ASH", true, true);
+maple = new node("MAPLE", true, true);
+sycamore = new node("SYCAMORE", true, true);
+oak = new node("OAK", true, true);
+cottonwood = new node("COTTONWOOD", true, true);
+dogwood = new node("PACIFIC DOGWOOD", true, true);
+
+edge = new node("");
+pairs_again = new node("On the branch, do the leaves grow from opposite sides?", dogwood, edge);
+stems = new node("Is the stem more than an inch in length?", cottonwood , pairs_again);
+lobes = new node("Does the leaf have lobes?", oak, stems);
+pairs = new node("On the branch, do the leaves grow from opposite sides?", maple, sycamore);
+simple = new node("Do the big veins mostly branch from the same place?", pairs , lobes)
+elder_berry = new node("Are there small berries", elder_berry, ash);
+jagged = new node("Are the leaflets jagged?", boxelder, hop);
+three = new node("Do the leaves have three leaflets?", jagged, buckeye);
+fan_out = new node("Do the leaflets fan out from a single point?" , three, elder_berry);
+smell = new node("Do the leaves smell spicy?", pepper, ailanthus);
+saw = new node("Do the leaflets have saw-toothed edges?", walnut, smell);
+fractal = new node("Do the leaves have eight or more leaflets?", saw , fan_out);
+deciduous = new node("Deciduous trees are leafless in the winter.\nIs each leaf clearly one leaf?", simple, fractal);
+ 
+groovy = new node("Are the tops of the needles grooved?",redwood, douglas); 
+thorns = new node("On the old dried-out twigs, are there stubby thorn-like protusions?", spruce, groovy); 
+scars = new node("Are there smooth, round scars where old needles have fallen off the twig?", fir, thorns);
+berries = new node("Are there small berry-like fruits?", juniper, cypress);
+giant = new node("Is the tree enormously tall?", sequoia, berries);
+scales = new node("Do the end of the branches look like they have been ironed flat?", cedar, giant);
+bundles = new node("Do the bundles have fewer than six needles?", pine, larch);          
+needle = new node("Needles. Are the needles bundled in a pack?", bundles, scars);
+coniferous = new node("Confirous trees or evergreens keep their leaves all winter.\n Do the leaves have scales?", scales, needle);
+leaves = new node("Does the tree have needles or scale-like leaves?" , coniferous, deciduous);
+
+fail = new node("Fail... This is a tree-classifying expert system...\nExiting.", True, True);
+tree = new node("Are you trying to classify a tree?", leaves, fail);
+intro = new node("Welcome!\nPlease answer the questions with either a yes or a no.\nAre you ready?", tree, fail);
   
 main(intro);   
+
 
