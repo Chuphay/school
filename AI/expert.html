@@ -1,0 +1,61 @@
+var node = function (string, nodeT, nodeF) {
+    this.string = string;
+    this.nodeT = nodeT;
+    this.nodeF = nodeF;
+
+    this.ask = function(){
+        var input = prompt(this.string);
+        if(input == ('y' || 'yes' || 'Yes')){
+            return this.nodeT;
+        } else {
+            return this.nodeF;
+        }
+    };
+};
+function main(node){
+    i = 0;
+    while(true){
+        node = node.ask()
+        console.log(node.string)
+        if(node == true){
+            console.log("not sure why we are here")
+            break;
+        }
+        if(node == null){
+            console.log("null?")
+            break;
+        }
+        if(node.nodeT == true){
+            console.log(node.string);
+            break
+         }
+        if (i> 10){
+            console.log("Looks like things ran away :(");
+            break;
+        }
+    i++;
+  }
+}
+
+var True = true
+
+pine = new node("PINE!!!", True, True)
+larch = new node("LARCH!!!",True, True)
+cedar = new node("CEDAR!!!", True, True)
+sequoia = new node("GIANT SEQUOIA!!!", True, True)
+juniper = new node("JUNIPER!!!",True,True)
+cypress = new node("CYPRES!!!",True, True)
+berries = new node("Are there small berry-like fruits?", juniper, cypress)
+giant = new node("Is the tree enormously tall?", sequoia, berries)
+scales = new node("Do the end of the branches look like they have been ironed flat?", cedar, giant)
+bundles = new node("Do the bundles have fewer than six needles?", pine, larch)            
+needle = new node("Needles. Are the needles bundled in a pack?", bundles, null) 
+deciduous = new node("Deciduous trees are leafless in the winter.\nTT ",True, True)
+coniferous = new node("Confirous trees or evergreens keep their leaves all winter.\n Do the leaves have scales?", scales, needle)
+needle_scales = new node("Does the tree have needles or scale-like leaves?" , coniferous, deciduous)
+fail = new node("Fail... This is a tree-classifying expert system...\nExiting.", True, True)
+tree = new node("Are you trying to classify a tree?", needle, fail)
+intro = new node("Welcome!\nPlease answer the questions with either a yes or a no.\nAre you ready?", tree, fail)
+  
+main(intro);   
+
