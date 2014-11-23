@@ -1,53 +1,41 @@
-var node = function (string, nodeT, nodeF) {
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+  <div>
+    <p id = info></p>    
+<button onclick="yes()">Yes</button>
+<button onclick="no()">No</button>
+  </div>
+  <script>
+    var node = function (string, nodeT, nodeF) {
     this.string = string;
     this.nodeT = nodeT;
     this.nodeF = nodeF;
 
     this.ask = function(){
-        var input = prompt(this.string);
-        if(input == ('y' || 'yes' || 'Yes')){
-            return this.nodeT;
-        } else {
-            return this.nodeF;
-        }
+      document.getElementById('info').innerHTML = this.string;
+
     };
 };
 
-function main(node){
-    i = 0;
-    while(true){
-        if (i> 20){
-            console.log("Looks like things ran away :(");
-            break;
-        }
-        node = node.ask();
-        if(node === true){
-            console.log("not sure why we are here");
-            break;
-        }
-        if(node === null){
-            console.log("null?");
-            break;
-        }
-        if(node.nodeT === true){
-            console.log(node.string);
-            break;
-        }
-i++;
-}
-}
+
+
 
 var True = true;
 
-pine = new node("PINE!!!", true, true);
-larch = new node("LARCH!!!", true, true);
-cedar = new node("CEDAR!!!", true, true);
-sequoia = new node("GIANT SEQUOIA!!!", true, true);
-juniper = new node("JUNIPER!!!", true, true);
-cypress = new node("CYPRES!!!", true, true);
-fir = new node("FIR!!!", true, true);
-spruce = new node("SPRUCE!!!", true, true);
-redwood = new node("REDWOOD!!!", true, true);
+pine = new node("Pines are conifer trees in the genus Pinus, in the family Pinaceae. They are the only genus in the subfamily Pinoideae.", true, "http://t1.gstatic.com/images?q=tbn:ANd9GcQmblLJrt1uz--tUPnoiQI0mY4h7fib498ELSbt3y1-FPs4cn3_");
+larch = new node("Larches are conifers in the genus Larix, in the family Pinaceae. Growing from 20 to 45 m tall, they are native to much of the cooler temperate northern hemisphere, on lowlands in the north and high on mountains further south.", true, "http://www.conifers.org/pi/la/lyallii06.jpg");
+cedar = new node("Cedar is the common name for Cedar wood, used for several different trees that grow in different parts of the world", true, "http://t1.gstatic.com/images?q=tbn:ANd9GcRFNseP0Ui1isOHzgcg-5XQWetOnFc_KqS-7AAViKLvv1GDUwFv");
+sequoia = new node("Sequoiadendron giganteum is the sole living species in the genus Sequoiadendron, and one of three species of coniferous trees known as redwoods", true, "http://www.visitsequoia.com/img/3_1_1_The_Giant_Forest.jpg");
+juniper = new node("Junipers are coniferous plants in the genus Juniperus of the cypress family Cupressaceae", true, "http://t0.gstatic.com/images?q=tbn:ANd9GcSdXRKVRzaB_zcgwnIjZeo4WfJdyzhcYvf1JuqU139CLbRa21p47Q");
+cypress = new node("Cypress is the name applied to many plants in the cypress family Cupressaceae, which is a conifer of northern temperate regions.", true, "http://t1.gstatic.com/images?q=tbn:ANd9GcQvyqUHTQuZKW1uJXv_d_TacunDUYIePYTemxdqG0sYYwKbKfxR");
+fir = new node("Firs (Abies) are a genus of 48–55 species of evergreen coniferous trees in the family Pinaceae. They are found through much of North and Central America.", true, "http://christmastreebrooklyn.com/wp-content/uploads/2014/11/Christmas-Trees-for-sale.jpg");
+spruce = new node("A spruce is a tree of the genus Picea, a genus of about 35 species of coniferous evergreen trees in the Family Pinaceae, found in the northern temperate and boreal regions of the earth.", true, "http://t0.gstatic.com/images?q=tbn:ANd9GcQhOEQtmZql0e97CKAxpvvn_8tWF9f-8k0IGllc_3WTott4wcFxEQ");
+redwood = new node("Sequoioideae (redwoods) is a subfamily in the family Cupressaceae", true, true);
 douglas = new node("DOUGLASS!!!", true, true);
 walnut = new node("WALNUT!!!", true, true);
 pepper = new node("PEPPER!!!", true, true);
@@ -71,7 +59,7 @@ mahogany = new node("MAHOGANY", true, true);
 willow = new node("WILLOW", true, true);
 
 not_smelly = new node("Is the bark smooth and red-brown?", madrone, mahogany);
-smelly = new node("Is the leaf light-green, with a sharp tip?", eucalyptus, laurel)
+smelly = new node("Is the leaf light-green, with a sharp tip?", eucalyptus, laurel);
 smooth = new node("Do the leaves have a strong smell?", smelly, not_smelly);
 bark = new node("Is the bark white?", birch, alder);
 vein_edge = new node("Is the leaf longer than two inches?", bark, birch);
@@ -81,7 +69,7 @@ pairs_again = new node("On the branch, do the leaves grow from opposite sides?",
 stems = new node("Is the stem more than an inch in length?", cottonwood , pairs_again);
 lobes = new node("Does the leaf have lobes?", oak, stems);
 pairs = new node("On the branch, do the leaves grow from opposite sides?", maple, sycamore);
-simple = new node("Do the big veins mostly branch from the same place?", pairs , lobes)
+simple = new node("Do the big veins mostly branch from the same place?", pairs , lobes);
 elder_berry = new node("Are there small berries", elder_berry, ash);
 jagged = new node("Are the leaflets jagged?", boxelder, hop);
 three = new node("Do the leaves have three leaflets?", jagged, buckeye);
@@ -105,7 +93,31 @@ leaves = new node("Does the tree have needles or scale-like leaves?" , coniferou
 fail = new node("Fail... This is a tree-classifying expert system...\nExiting.", True, True);
 tree = new node("Are you trying to classify a tree?", leaves, fail);
 intro = new node("Welcome!\nPlease answer the questions with either a yes or a no.\nAre you ready?", tree, fail);
+ 
+main_node = intro;
+main_node.ask();
+function yes(){
+  main_node = main_node.nodeT;
+  if(main_node.nodeT === true){
+       console.log(main_node.string);
+    //main_node.ask();
+   } else {
+  main_node.ask();
+   }
   
-main(intro);   
+}
+function no(){
+    main_node = main_node.nodeF;
+  if(main_node.nodeT === true){
+       console.log(main_node.string);
+    //main_node.ask();
+   } else {
+  main_node.ask();
+   }
+}
 
 
+
+  </script>
+</body>
+</html>
