@@ -2,14 +2,28 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>JS Bin</title>
+  <title>Tree Expert</title>
+  <style>
+  body {background-color:lightgray}
+  h1   {color:blue}
+  h2    {color:green}
+
+    button {
+  color: #FFF;
+  background-color: #900;
+  font-weight: bold;
+      font-size: 150%;
+}
+</style>
 </head>
 <body>
-  <div>
+  <div id = main>
     <p id = info></p>    
 <button onclick="yes()">Yes</button>
+
 <button onclick="no()">No</button>
   </div>
+  <p id = end></p>
   <script>
     var node = function (string, nodeT, nodeF) {
     this.string = string;
@@ -35,28 +49,28 @@ juniper = new node("Junipers are coniferous plants in the genus Juniperus of the
 cypress = new node("Cypress is the name applied to many plants in the cypress family Cupressaceae, which is a conifer of northern temperate regions.", true, "http://t1.gstatic.com/images?q=tbn:ANd9GcQvyqUHTQuZKW1uJXv_d_TacunDUYIePYTemxdqG0sYYwKbKfxR");
 fir = new node("Firs (Abies) are a genus of 48–55 species of evergreen coniferous trees in the family Pinaceae. They are found through much of North and Central America.", true, "http://christmastreebrooklyn.com/wp-content/uploads/2014/11/Christmas-Trees-for-sale.jpg");
 spruce = new node("A spruce is a tree of the genus Picea, a genus of about 35 species of coniferous evergreen trees in the Family Pinaceae, found in the northern temperate and boreal regions of the earth.", true, "http://t0.gstatic.com/images?q=tbn:ANd9GcQhOEQtmZql0e97CKAxpvvn_8tWF9f-8k0IGllc_3WTott4wcFxEQ");
-redwood = new node("Sequoioideae (redwoods) is a subfamily in the family Cupressaceae", true, true);
-douglas = new node("DOUGLASS!!!", true, true);
-walnut = new node("WALNUT!!!", true, true);
-pepper = new node("PEPPER!!!", true, true);
-ailanthus = new node("AILANTHUS!!", true, true);
-buckeye = new node("CALIFORNIA BUCKEYE!!!", true, true);
-boxelder = new node("BOXELDER", true, true);
-hop = new node("HOP TREE", true, true);
-elder_berry = new node("ELDER BERRY", true, true);
-ash = new node("ASH", true, true);
-maple = new node("MAPLE", true, true);
-sycamore = new node("SYCAMORE", true, true);
-oak = new node("OAK", true, true);
-cottonwood = new node("COTTONWOOD", true, true);
-dogwood = new node("PACIFIC DOGWOOD", true, true);
-birch = new node("BIRCH", true, true);
-alder = new node("ALDER", true ,true);
-eucalyptus = new node("EUCALYPTUS", true, true);
-laurel = new node("LAUREL OR BAY", true, true);
-madrone = new node("MADRONE", true, true);
-mahogany = new node("MAHOGANY", true, true);
-willow = new node("WILLOW", true, true);
+redwood = new node("Sequoioideae (redwoods) is a subfamily in the family Cupressaceae", true, "http://buzzcarl.com/images/MTB-thick-redwoods-HC_V3.jpg");
+douglas = new node("Douglas fir, with the scientific name Pseudotsuga menziesii, also known as Oregon pine or Douglas spruce, is an evergreen conifer species native to western North America.", true, "http://www.sfu.ca/geog/geog351fall07/Group06/Final%20Project%20Images/Interior%20Douglas-fir/douglas%20fir.jpg");
+walnut = new node("The Walnut tree or Juglans is a plant genus of the family Juglandaceae, the seeds of which are known as walnuts.", true, "http://www.pulsarmedia.eu/data/media/867/Walnut%20Tree,%20Cades%20Cove,%20Great%20Smoky%20Mountains%20National%20Park,%20Tennessee.jpg");
+pepper = new node("Peruvian pepper (Schinus molle, also known as American pepper, Peruvian peppertree, escobilla, false pepper, molle del Peru, pepper tree, peppercorn tree, Californian pepper tree, pirul and Peruvian mastic) is an evergreen tree that grows to 15 meters (50 feet).", true, "http://t3.gstatic.com/images?q=tbn:ANd9GcQGw9tfcwwdwqaoM81_a7Q0p8yUd856qt-LBFex1UxOABEExZcLRQ");
+ailanthus = new node("Ailanthus is a genus of trees belonging to the family Simaroubaceae, in the order Sapindales", true, "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Ailanthus_altissima_Arg.jpg/800px-Ailanthus_altissima_Arg.jpg");
+buckeye = new node("Aesculus californica, California buckeye or California horse-chestnut, is a species of buckeye native to California and southwestern Oregon.", true, "http://ucanr.edu/sites/scmg/files/155453display.jpg");
+boxelder = new node("Acer negundo is a species of maple native to North America. Box elder, boxelder maple, ash-leaved Maple, and maple ash are its most common names in the United States; in Britain and Ireland it is also known as ashleaf maple. ", true, "http://t0.gstatic.com/images?q=tbn:ANd9GcQAg67E8Uj81YOhn81u9OtwsIDGkKiATJ6JNyVR2v8OCJRfNqPtCw");
+hop = new node("Ptelea trifoliata (hoptree, stinking ash, wafer ash) is a species of flowering plant in the Rutaceae family, native to North and Central America.", true, "http://t3.gstatic.com/images?q=tbn:ANd9GcQqt9AWzd22lpb-qUhRhgeQhq5sujxRqNLvALM1Ad79Zyh4fB1Etw");
+elder_berry = new node("Sambucus (elder or elderberry) is a genus of flowering plants in the family Adoxaceae." , true, "http://t2.gstatic.com/images?q=tbn:ANd9GcRLlGG4IpM8yejropOwZyl8oQBKJl1Z48gTidPE4nwTjlxLFIEhlQ");
+ash = new node("Fraxinus, commonly known as ash, is a genus of flowering plants in the olive and lilac family, Oleaceae. It contains 45–65 species of usually medium to large trees, mostly deciduous though a few subtropical species are evergreen.", true, "http://t1.gstatic.com/images?q=tbn:ANd9GcTmC-vf8URFmAPLOb2uNNaUeCG12_KTrnbNxVxJIug2zLJcNfZtsg");
+maple = new node("Acer is a genus of trees or shrubs commonly known as maple. Maples are variously classified in a family of their own, the Aceraceae, or together with the Hippocastanaceae included in the family Sapindaceae.", true, "http://t3.gstatic.com/images?q=tbn:ANd9GcS7k9akZX3H-954u-XyM8j-JwW5irmitxFpMcK_IqL4VQQyrtaO");
+sycamore = new node("Platanus occidentalis, also known as American sycamore, American planetree, occidental plane, and buttonwood, is one of the species of Platanus native to North America.", true, "http://t3.gstatic.com/images?q=tbn:ANd9GcSpHOT_ZnDO7NOz6o4aOq-XtdUyg-9xhrF48CqzAZX0kfnI9OCmQQ");
+oak = new node("An oak is a tree or shrub in the genus Quercus of the beech family, Fagaceae, having approximately 600 extant species. The common name 'oak' may also appear in the names of species in related genera, notably Lithocarpus.", true, "http://t2.gstatic.com/images?q=tbn:ANd9GcSXs65veG8aWc2WfKMW45-M1ntwFF7GPPA-d1SVnwT4qdiyhf3c");
+cottonwood = new node("Populus section Aigeiros is a section of three species in the genus Populus, the poplars. Commonly known as cottonwoods, the species are native to North America, Europe, and western Asia", true, "http://www.gpnc.org/images/jpegs/plants/cwdtree.jpg");
+dogwood = new node("Cornus nuttallii is a species of dogwood native to western North America from the lowlands of southern British Columbia to the mountains of southern California, with an inland population in central Idaho.", true, "http://images.glaciermedia.ca/polopoly_fs/1.568724!/fileImage/httpImage/image.jpg_gen/derivatives/landscape_490/new-new-dogwood-jpg.jpg");
+birch = new node("Birch is a broadleaved deciduous hardwood tree of the genus Betula in the family Betulaceae, which also includes alders, hazels, and hornbeams.", true, "http://t0.gstatic.com/images?q=tbn:ANd9GcS1txe63GX11I8VrQOBMQORZiJE6LnO0HsJlMbMyDAvvOIAu_YN_g");
+alder = new node("Alder is the common name of a genus of flowering plants belonging to the birch family Betulaceae. The genus comprises about 30 species of monoecious trees and shrubs, a few reaching a large size", true , "http://t2.gstatic.com/images?q=tbn:ANd9GcRY5QwvHjVvhIN_KDSDpKyAYaPFgWKQzerCADoREb7hQTtYYy3WRw");
+eucalyptus = new node("Eucalyptus is a diverse genus of flowering trees and shrubs in the myrtle family, Myrtaceae. Members of the genus dominate the tree flora of Australia.", true, "http://t3.gstatic.com/images?q=tbn:ANd9GcRqVhupHKfxv4ZPJhyW0Eik1WIEPuEaEDydQVrdKV0p0stY-hfbgA");
+laurel = new node("Laurus nobilis is an aromatic evergreen tree or large shrub with green, glossy leaves, native to the Mediterranean region. It is one of the plants used for bay leaf seasoning in cooking. It is known as bay laurel.", true, "http://t1.gstatic.com/images?q=tbn:ANd9GcROENxYfLoarvPqVpJPuroIT_dOyKaj5L4uN5hMTVBp6kuczsgCyw");
+madrone = new node("Arbutus menziesii or madrone is a species of tree in the family Ericaceae, native to the western coastal areas of North America, from British Columbia to California", true, "http://www.deanelittleimagery.com/sitebuilder/images/Young_Madrone_San_Peninsula-445x600.jpg");
+mahogany = new node("Mahogany is the national tree of the Dominican Republic and Belize.", true, "http://t2.gstatic.com/images?q=tbn:ANd9GcSH4KAALGK69HIpkIB9ZvzcXXyrb4ug1zdMsazggDbPraZKFmbH");
+willow = new node("Willows, sallows, and osiers form the genus Salix, around 400 species of deciduous trees and shrubs, found primarily on moist soils in cold and temperate regions of the Northern Hemisphere.", true, "http://tree-pictures.com/nice-willow-tree.jpg");
 
 not_smelly = new node("Is the bark smooth and red-brown?", madrone, mahogany);
 smelly = new node("Is the leaf light-green, with a sharp tip?", eucalyptus, laurel);
@@ -90,30 +104,30 @@ needle = new node("Needles. Are the needles bundled in a pack?", bundles, scars)
 coniferous = new node("Confirous trees or evergreens keep their leaves all winter.\n Do the leaves have scales?", scales, needle);
 leaves = new node("Does the tree have needles or scale-like leaves?" , coniferous, deciduous);
 
-fail = new node("Fail... This is a tree-classifying expert system...\nExiting.", True, True);
-tree = new node("Are you trying to classify a tree?", leaves, fail);
-intro = new node("Welcome!\nPlease answer the questions with either a yes or a no.\nAre you ready?", tree, fail);
+fail = new node("Fail... This is a tree-classifying expert system...\nExiting.", True, "http://t1.gstatic.com/images?q=tbn:ANd9GcStjvWcGSQTvUuddsInO-7DgZT6IFgUF8HQjypZ6LxXDYy6SP-z");
+intro = new node("Welcome to the tree expert!\nAre you ready to begin?", leaves, fail);
  
 main_node = intro;
 main_node.ask();
 function yes(){
-  main_node = main_node.nodeT;
-  if(main_node.nodeT === true){
-       console.log(main_node.string);
-    //main_node.ask();
-   } else {
-  main_node.ask();
-   }
-  
+    main_node = main_node.nodeT;
+    if(main_node.nodeT === true){
+      console.log(main_node.string);
+      document.getElementById('main').innerHTML = '<img src ='+main_node.nodeF+ '>';
+      document.getElementById('end').innerHTML = main_node.string;
+     } else {
+      main_node.ask();
+   } 
 }
 function no(){
     main_node = main_node.nodeF;
-  if(main_node.nodeT === true){
-       console.log(main_node.string);
-    //main_node.ask();
-   } else {
-  main_node.ask();
-   }
+    if(main_node.nodeT === true){
+      console.log(main_node.string);
+      document.getElementById('main').innerHTML = '<img src ='+main_node.nodeF+ '>';
+      document.getElementById('end').innerHTML = main_node.string;
+     } else {
+      main_node.ask();
+    }
 }
 
 
