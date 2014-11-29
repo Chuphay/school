@@ -258,9 +258,9 @@ double *make_input(char a, char b, char c){
 }
 
 
-void train(char a, char b, char c, char out, net *x, int epochs){
-
-  double RATE = 0.5;
+void train(char a, char b, char c, char out, net *x, double RATE){
+  int epochs = 1;
+  //double RATE = 0.5;
   //printf("inside\n");
   double storage[x->size - 2][BYTE];
   // char char_stor[x->size -2];
@@ -450,46 +450,60 @@ void train(char a, char b, char c, char out, net *x, int epochs){
 					 					  
 }
 
+void batch(char *x, char *y, char *t, int length, net *net, int epochs, double rate){
+
+  int i,n;
+  for(i=0; i< epochs; i++){
+    for(n=0; n<length;n++){
+      train(0,x[n],y[n],t[n],net, rate);
+    }
+  }
+}
+
+
+
 
 
 int main(){
 
   srand(time(NULL));
-  
-  int layers[5] = {2,2,2,2,1};
-  net *try = make_net(9,5,layers);
-  printf("try length: %d\n", try->length);
-  print_byte(activate_net(0,12,75,try));
-  print_byte(12^75);
-  train(0,12,75,12^75,try,1);
-  printf("here : ");
-  print_byte(activate_net(0,12,75,try));
-
-  printf("small\n");
-  int layers2[2] = {2,1};
-  net *try2 = make_net(3,2,layers2);
-  print_byte(activate_net(0,129,87,try2));
-  //print_byte(12|75);
-  //train(0,12,75,12|75,try2,10);
-  train(0,129,87,129|87,try2,200);
-  print_byte(activate_net(0,129,87,try2));
-  print_byte(129|87);
-
 
   printf("batch!\n");
   int layers3[3] = {2,2,1};
   net *XOR = make_net(5,3,layers3);
-  int i;
-  for (i = 0; i<100; i++){
-    train(0,0,0,0^0,XOR,1);
-    train(0,0,1,0^1,XOR,1);
-    train(0,1,0,1^0,XOR,1);
-    train(0,1,1,1^1,XOR,1);
-  }
+  char x[4] ={0,0,1,1};
+  char y[4] = {0,1,0,1};
+  char t[4] = {0,1,1,0};
+  batch(x,y,t,4,XOR,100,0.1);
   print_byte(activate_net(0,0,0,XOR));
   print_byte(activate_net(0,0,1,XOR));
   print_byte(activate_net(0,1,0,XOR));
   print_byte(activate_net(0,1,1,XOR));
+  char a[70];
+  char b[70];
+  char tar[70];
+  int i;
+  for(i=0;i<70;i++){
+    a[i] = rand()%256;
+    b[i] = rand()%256;
+    tar[i] = (a[i]|b[i])%256;
+  }
+  int try = 5;
+  batch(a,b,tar,try,XOR,10000,0.01);
+  int sum = 0;
+  for(i=0;i<try;i++){
+    if(activate_net(0,a[i],b[i],XOR) == tar[i]){
+      sum++;
+    } else {
+      printf(":(\n");
+      print_byte(tar[i]);
+      print_byte(activate_net(0,a[i],b[i],XOR));
+    }
+  }
+  printf("sum: %d\n",sum);
+
+
+
   
 
 
