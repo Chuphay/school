@@ -1,0 +1,18 @@
+for threads, compile:
+
+gcc -g -Wall -o pthread_one pthread_one.c -lpthread
+
+then run:
+
+./pthread_one 10
+
+for mpi, compile:
+
+mpicc -g -Wall -o mpi_one mpi_one.c
+
+then run:
+
+mpiexec -n 10 ./mpi_one
+
+(note, I had to install some extra libraries to do use open mpi)
+
