@@ -6,6 +6,8 @@ then run:
 
 ./pthread_one 10
 
+(note, I had to install some extra libraries to do use openMP and mpi)
+
 for mpi, compile:
 
 mpicc -g -Wall -o mpi_one mpi_one.c
@@ -14,5 +16,13 @@ then run:
 
 mpiexec -n 10 ./mpi_one
 
-(note, I had to install some extra libraries to do use open mpi)
+for openMP, compile:
+
+gcc -g -Wall -fopenmp -o openmp_one openmp_one.c
+
+then run:
+
+./openmp_one 4
+
+
 
