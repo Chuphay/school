@@ -25,8 +25,11 @@ code_show=true;
 function code_toggle() {
  if (code_show){
  $('div.input').hide();
+ $('div.output_prompt').hide();
+
  } else {
  $('div.input').show();
+ $('div.output_prompt').show();
  }
  code_show = !code_show
 } 
