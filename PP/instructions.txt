@@ -24,5 +24,8 @@ then run:
 
 ./openmp_one 4
 
+to view pgm's:
+
+eog feep.pgm
 
 
