@@ -26,10 +26,10 @@ $( document ).ready(code_toggle);
 
 
 
-def repeat(times):
+def simulate(times):
     """For example:   
     
-    @repeat(1000000)
+    @simulate(1000000)
     def getRand():
         return np.random.rand(3)
     print getRand()
@@ -44,3 +44,28 @@ def repeat(times):
             return output/float(times)
         return wrapped_f
     return wrap
+
+
+from scipy.stats import binom
+dbinom = binom.pmf
+pbinom = binom.cdf
+qbinom = binom.ppf
+rbinom = binom.rvs
+
+from scipy.stats import poisson
+dpois = poisson.pmf
+ppois = poisson.cdf
+qpois = poisson.ppf
+rpois = poisson.rvs
+
+from scipy.stats import expon
+dexp = expon.pdf
+pexp = expon.cdf
+qexp = expon.ppf
+rexp = expon.rvs
+
+from scipy.stats import beta
+dbeta = beta.pdf
+pbeta = beta.cdf
+qbeta = beta.ppf
+rbeta = beta.rvs
