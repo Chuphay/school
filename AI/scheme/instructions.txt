@@ -1,0 +1,34 @@
+to run the hello world program, type: 
+
+>>>> gsi hello.scm
+
+to simply use the scheme language, apparently 
+
+>>>> gsi
+
+should be just fine
+
+once inside, try
+
+>>>>> (+ 1 2)
+
+On the other hand, prolog seems quite incomprehensible.
+
+to run the hello world program, try:
+
+>>>>> swipl hello.pl
+
+and typing swipl will get you to the prompt as well... 
+
+but i can't make heads or tails of it
+
+getting better at it now
+
+>>> swipl
+
+?- consult('HW4.pl').
+
+?- ancestor(david, X).
+
+
+
