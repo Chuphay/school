@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.1)  10 JUN 2015 16:14
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.1)  11 JUN 2015 11:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -335,43 +335,20 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Underfull \hbox (badness 10000) in paragraph at lines 61--62
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 63--64
-
- []
-
 <plot2.png, id=1, 481.8pt x 481.8pt>
 File: plot2.png Graphic file (type png)
  <use plot2.png>
-Package pdftex.def Info: plot2.png used on input line 67.
-(pdftex.def)             Requested size: 96.35829pt x 96.35829pt.
+Package pdftex.def Info: plot2.png used on input line 70.
+(pdftex.def)             Requested size: 192.71658pt x 192.71658pt.
 
 <plot1.png, id=2, 481.8pt x 481.8pt>
 File: plot1.png Graphic file (type png)
  <use plot1.png>
-Package pdftex.def Info: plot1.png used on input line 68.
-(pdftex.def)             Requested size: 96.35829pt x 96.35829pt.
+Package pdftex.def Info: plot1.png used on input line 71.
+(pdftex.def)             Requested size: 192.71658pt x 192.71658pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 71--72
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- []
-
-LaTeX Font Info:    Try loading font information for U+msa on input line 75.
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 75.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 85--87
-
- []
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -381,21 +358,72 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
- <./plot2.png> <./plot1.png>] [2] (./final.aux) ) 
+]
+Underfull \hbox (badness 10000) in paragraph at lines 74--75
+
+ []
+
+<tenure.png, id=10, 481.8pt x 481.8pt>
+File: tenure.png Graphic file (type png)
+ <use tenure.png>
+Package pdftex.def Info: tenure.png used on input line 76.
+(pdftex.def)             Requested size: 192.71658pt x 192.71658pt.
+
+<logtenure.png, id=11, 481.8pt x 481.8pt>
+File: logtenure.png Graphic file (type png)
+ <use logtenure.png>
+Package pdftex.def Info: logtenure.png used on input line 77.
+(pdftex.def)             Requested size: 192.71658pt x 192.71658pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 80--82
+
+ []
+
+<cor.png, id=12, 481.8pt x 481.8pt>
+File: cor.png Graphic file (type png)
+ <use cor.png>
+Package pdftex.def Info: cor.png used on input line 83.
+(pdftex.def)             Requested size: 144.5411pt x 144.5411pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2 <./plot2.png> <./plot1.png> <./tenure.png> <./logtenure.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
+
+ []
+
+<norm.png, id=20, 481.8pt x 481.8pt>
+File: norm.png Graphic file (type png)
+ <use norm.png>
+Package pdftex.def Info: norm.png used on input line 90.
+(pdftex.def)             Requested size: 192.71658pt x 192.71658pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
+
+ []
+
+[3 <./cor.png> <./norm.png>] [4] [5] [6] [7] (./final.aux) ) 
 Here is how much of TeX's memory you used:
- 4894 strings out of 494985
- 66215 string characters out of 6180356
- 174489 words of memory out of 5000000
- 8038 multiletter control sequences out of 15000+600000
- 8285 words of font info for 32 fonts, out of 8000000 for 9000
+ 4878 strings out of 494985
+ 65939 string characters out of 6180356
+ 179489 words of memory out of 5000000
+ 8035 multiletter control sequences out of 15000+600000
+ 4713 words of font info for 18 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 38i,11n,43p,1142b,224s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on final.pdf (2 pages, 32077 bytes).
+ 38i,11n,43p,1181b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on final.pdf (7 pages, 127038 bytes).
 PDF statistics:
- 19 PDF objects out of 1000 (max. 8388607)
- 9 compressed objects within 1 object stream
+ 52 PDF objects out of 1000 (max. 8388607)
+ 27 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
