@@ -1,0 +1,4 @@
+def cons(x:Int, y:Int) = {
+     (m:Int) => {if(m==1) y; else x;}}
+
+def print(l:List[Int]) = {println(numer(l)+"/"+denom(l))}
