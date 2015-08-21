@@ -14,7 +14,13 @@ class Matrix(val numRows: Int, val numCols: Int) {
 
   def apply(i:Int,j:Int) = values(i)(j)
   def update(i:Int, j:Int, number:Double) = values(i)(j) = number
-
+  /*def update(that:Matrix) = {
+    for (i <- 0 until numRows){
+      for (j <- 0 until nemCols){
+        this(i,j) = that(i,j)
+      }
+    }
+  }*/
 
 
   def printThis(){
@@ -338,7 +344,122 @@ class Matrix(val numRows: Int, val numCols: Int) {
     }
     return (q + (1.0/mu), x)
   }
+  def householder() = {
+    if(!this.isSymmetric) throw new BadException("not symmetric")
+    var v , u, z = new Matrix(numRows,1)
+    for(k <- 0 until numRows - 1) {
+      var q, a, rsq, prod = 0.0
 
+      for(j <- k+1 until numRows) q += this(j,k)*this(j,k)
+
+      if (this(k+1,k) == 0){
+        a = - Math.sqrt(q)
+      } else {
+        a = - Math.sqrt(q)*this(k+1,k)/Math.abs(this(k+1,k))
+      }
+      rsq = a*a - a*this(k+1,k)
+      v(k,0) = 0
+      v(k+1, 0) = this(k+1,k) - a
+      for(j <- k+2 until numRows) v(j, 0) = this(j,k)
+      u = this*v*(1/rsq)
+      prod = ((v.T)*u)(0,0)
+
+      z = u + (-prod/(2*rsq))*v
+      val temp:Matrix = this + (-1.0)*(v.outer(z.T) + z.outer(v.T))
+      for (i <- 0 until numRows){
+        for (j <- 0 until numCols){
+          this(i,j) = temp(i,j)
+        }
+      }
+    }
+  }
+  def internalQR(a:Array[Double], b:Array[Double]):Tuple3[String, Double, Double] = {
+    val tol = 0.001
+    var shift = 0.0
+    val n = a.length
+    for(k <- 0 until 1){
+      var bb = - (a(n-1) + a(n-2))
+      var cc = a(n-1)*a(n-2) - b(n-2)*b(n-2)
+      var dd = Math.sqrt((bb*bb - 4*cc))
+      var mu1, mu2, s = 0.0
+      println("bb", bb, cc, dd)
+      if(bb>0){
+        mu1 = - 2*cc/(bb+dd)
+        mu2 = -(bb+dd)/2
+      } else {
+        mu1 = (dd-bb)/2
+        mu2 = 2*cc/(dd - bb)
+      }
+      if(n == 2){
+        var gamma1 = mu1 + shift
+        var gamma2 = mu2 + shift
+        return ("two", gamma1, gamma2)
+      } else {
+        println("mu",mu1,mu2)
+        if(Math.abs(mu1 - a(n-1)) >= Math.abs(mu2 - a(n-1))){
+          shift += mu2
+          s = mu2
+        } else {
+          shift += mu1
+          s = mu1
+        }
+        println("shift", shift)
+        var d = a.map(l => l - s)
+        var x = new Array[Double](n)
+        var z, y, c, ss, qq = new Array[Double](n-1)
+        var r = new Array[Double](n-2)
+        x(0) = d(0)
+        y(0) = b(0)
+        for(j <- 0 until n-1){
+          println("j",j)
+          z(j) = Math.sqrt(x(j)*x(j) +b(j)*b(j))
+          c(j) = x(j)/z(j)
+          ss(j) = b(j)/z(j)
+          qq(j) = c(j)*y(j) + ss(j)*d(j)
+          x(j+1) = -ss(j)*y(j) + c(j)*d(j)
+          if(j<n-2){
+            y(j+1) = c(j)*b(j)
+            r(j) = ss(j)*b(j)
+            println("R", r(j))
+          }
+        }
+
+        println("d")
+        d.foreach(l => print(l," ")); print("\n")
+        println("x")
+        x.foreach(l => print(l," ")); print("\n")
+        println("z")
+        z.foreach(l => print(l," ")); print("\n")
+        println("y")
+        y.foreach(l => print(l," ")); print("\n")
+        println("c")
+        c.foreach(l => print(l," ")); print("\n")
+        println("ss")
+        ss.foreach(l => print(l," ")); print("\n")
+        println("qq")
+        qq.foreach(l => print(l," ")); print("\n")
+
+      }
+
+    }
+    return ("Working",-1, -3)
+  }
+
+  def qr():Matrix = {
+    /*tridiagonal inputs please, no checks at this point*/
+    var out = new Matrix(numRows, 1)
+    var a = new Array[Double](numRows)
+    var b = new Array[Double](numRows - 1)
+    a(0) = this(0,0)
+    for(i <- 1 until numRows){
+      a(i) = this(i-1,i-1)
+      b(i-1) = this(i-1,i)
+    }
+    val (status, evalue1, evalue2) = internalQR(a, b)
+    //println(status)
+    //println(evalue1.toInt)
+    return out
+  }
 
 
 }
@@ -467,6 +588,16 @@ object firstTry {
     matrix.values(3) = Array(2,1,-2,-1)
 
     matrix.householder()
+    matrix.printThis()
+
+    matrix = new Matrix(3,3)
+    matrix.values(0) = Array(3,1,0)
+    matrix.values(1) = Array(1,3,1)
+    matrix.values(2) = Array(0,1,3)
+
+    matrix.qr()
+    println(Math.round(-0.90))
+    println(Math.abs(-0.99))
 
 
   }
