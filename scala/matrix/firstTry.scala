@@ -374,6 +374,8 @@ class Matrix(val numRows: Int, val numCols: Int) {
     }
   }
   def internalQR(a:Array[Double], b:Array[Double]):Tuple3[String, Double, Double] = {
+
+    /*wow man, so long and convoluted. No way was I going to get this right*/
     val tol = 0.001
     var shift = 0.0
     val n = a.length
@@ -405,8 +407,9 @@ class Matrix(val numRows: Int, val numCols: Int) {
         }
         println("shift", shift)
         var d = a.map(l => l - s)
-        var x = new Array[Double](n)
-        var z, y, c, ss, qq = new Array[Double](n-1)
+        d.foreach(println)
+        var x, z = new Array[Double](n)
+        var y, c, ss, qq = new Array[Double](n-1)
         var r = new Array[Double](n-2)
         x(0) = d(0)
         y(0) = b(0)
@@ -423,21 +426,17 @@ class Matrix(val numRows: Int, val numCols: Int) {
             println("R", r(j))
           }
         }
-
-        println("d")
-        d.foreach(l => print(l," ")); print("\n")
-        println("x")
-        x.foreach(l => print(l," ")); print("\n")
-        println("z")
-        z.foreach(l => print(l," ")); print("\n")
-        println("y")
-        y.foreach(l => print(l," ")); print("\n")
-        println("c")
-        c.foreach(l => print(l," ")); print("\n")
-        println("ss")
-        ss.foreach(l => print(l," ")); print("\n")
-        println("qq")
-        qq.foreach(l => print(l," ")); print("\n")
+        z(n-1) = x(n-1)
+        a(0) = ss(0)*qq(0) + c(0)*z(0)
+        b(0) = ss(0)*z(1)
+        for(j <- 1 until n-1){
+          a(j) = ss(j)*qq(j) + c(j-1)*c(j)*z(j)
+          b(j) = ss(j)*z(j+1)
+        }
+        a(n-1) = c(n-2)*z(n-2)
+        a.foreach(l => print(l," ")); print("\n")
+     
+        b.foreach(l => print(l," ")); print("\n")
 
       }
 
@@ -446,15 +445,17 @@ class Matrix(val numRows: Int, val numCols: Int) {
   }
 
   def qr():Matrix = {
+    /*Broken!!!!*/
     /*tridiagonal inputs please, no checks at this point*/
     var out = new Matrix(numRows, 1)
     var a = new Array[Double](numRows)
     var b = new Array[Double](numRows - 1)
     a(0) = this(0,0)
     for(i <- 1 until numRows){
-      a(i) = this(i-1,i-1)
+      a(i) = this(i,i)
       b(i-1) = this(i-1,i)
     }
+
     val (status, evalue1, evalue2) = internalQR(a, b)
     //println(status)
     //println(evalue1.toInt)
@@ -591,9 +592,10 @@ object firstTry {
     matrix.printThis()
 
     matrix = new Matrix(3,3)
-    matrix.values(0) = Array(3,1,0)
-    matrix.values(1) = Array(1,3,1)
-    matrix.values(2) = Array(0,1,3)
+    val s2 = Math.sqrt(2)/2
+    matrix.values(0) = Array(2,s2,0)
+    matrix.values(1) = Array(s2,1,-s2)
+    matrix.values(2) = Array(0,-s2,0)
 
     matrix.qr()
     println(Math.round(-0.90))
