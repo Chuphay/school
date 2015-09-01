@@ -1,19 +1,15 @@
-import scala.language.implicitConversions
 
 class BadException(message: String) extends Exception(message)
 
-class Scalar(x : Double) {
- // def *(y : Matrix) = y * x
-} 
 
-class Matrix(val numRows: Int, val numCols: Int) {
+
+class Graph(val numRows: Int) {
   //implicit def double2Scalar(d : Double) : Scalar = new Scalar(d)
 
   /*not sure why it's Matrix, really a graph*/ 
-  var connections = new Array[List[Double]](numRows)
+  var connections = new Array[List[Int]](numRows)
   for (i <- 0 until numRows) connections(i) = List()
   var values = Map[Tuple2[Int,Int], Double]()
-
 
   def apply(i:Int,j:Int) = {
     if((i <= 0) || (j <= 0) ) throw new BadException("aaply")
@@ -22,131 +18,105 @@ class Matrix(val numRows: Int, val numCols: Int) {
   }
   def update(i:Int, j:Int, number:Double) = {
     /*note, assuming directed unweighted graph*/
+    /*above not true anymore */
     if((i <= 0) || (j <= 0) ) throw new BadException("update")
     connections((i-1)) = (j-1)::connections((i-1))
+    connections((j-1)) = (i-1)::connections((j-1))
     values += ((i,j) -> number)
+    values += ((j,i) -> number)
   }
 
   def printThis(){
     for (i <- 1 to numRows) {
-      for(j <- 1 to numCols) {
+      for(j <- 1 to numRows) {
         print(this(i,j)+ " ")
       }
       println("")
     }
     println("")
   }
-/*
-
-  def multiplyRow(a:Int, b:Double){
-    values(a) = values(a).map(l => b*l)
-  }
-  def addRow(a:Int, b:Int){
-    var i = 0
-    for(i <- 0 until numCols){
-      values(b)(i) = values(a)(i) + values(b)(i)
+  def __connected(ls:List[Int], out:List[Int]):List[Int] = {
+    if(ls.isEmpty) out
+    else {
+      if(out.contains(ls.head+1)) {
+        __connected(ls.tail, out)
+      } else {
+        var temp:List[Int] = __connected(connections(ls.head), (ls.head+1)::out)
+        __connected(ls.tail, temp)
+      }
     }
   }
-  def switchRow(a:Int, b:Int){
-    val temp = values(a)
-    values(a) = values(b)
-    values(b) = temp
+  def connected(node:Int):List[Int] = {
+    return __connected(connections(node-1), List[Int](node))
   }
-
-  def reduce(){
-    var i = 0
-    for(i <- 0 until numRows){
-
-      if(this(i,i) == 0) {
-        var bad = true
-        var k = i+1
-        for(k <- i+1 until numRows){
-          if(this(k,k) !=0){
-            bad = false
-            switchRow(i,k)
-          }
-        }
-        if(bad) throw new BadException("uhh.. bad pivot")
+  def connectedStack(node:Int):List[Int] = {
+    var myStack = List(node-1)
+    var out = List[Int]()
+    while(!myStack.isEmpty){
+      if(!out.contains(myStack.head+1)){ 
+        out = (myStack.head+1)::out
+        var temp:List[Int] = connections(myStack.head)
+        myStack = temp:::(myStack.tail)
+      } else {
+        myStack = myStack.tail
       }
-
-      var j = i+1
-      for(j <- i+1 until numRows){
-        if(this(j,i) != 0){
-          multiplyRow(i,- this(j,i)/this(i,i))
-          addRow(i, j)
-        }
-      }
-      multiplyRow(i,1/this(i,i))
     }
+    out
   }
-  def solve():Matrix = {
-    if(numRows >= numCols) throw new BadException("Not n x n+m matrix")
-    this.reduce()
-    var out = new Matrix(numRows, numCols - numRows)
-    var k = 0
-    for (k <- 0 until numCols - numRows) {
-      var i = 0
-      for(i <- 0 until numRows){
-        var position = numRows - i - 1
-        var temp = this(position, numRows+k)
-        var j = 0
-        for(j <- 0 until i){
-          //temp = temp - out(numRows - j - 1, k)*this(position, numRows -j - 1)
-        }
-        out(position, k) = temp
+  def connectedQue(node:Int):List[Int] = {
+    var myQue = new Array[Int](numRows)
+    var length:Int = 0
+    var start:Int = 0
+    var out:List[Int] = Nil
+    myQue(start%numRows) = node - 1
+    myQue(1) = 3
+    length += 1
+    while(length > 0){
+      val num = myQue(start%numRows)
+      start += 1
+      length -= 1
+      if(!out.contains(num+1)){
+        out = (num+1)::out
+       var temp:List[Int] = connections(num)
+       while(!temp.isEmpty){
+         myQue((start+length)%numRows) = temp.head
+         length += 1
+         temp = temp.tail
+       }
       }
     }
     return out
   }
-
-  def T:Matrix = {
-    var out = new Matrix(numCols, numRows)
-    var i = 0
-    var j = 0
-    for(i <- 0 until numRows){
-      for(j<- 0 until numCols){
-        out(j,i) = this(i,j)
-      }
-    }
-    return out
-  }
-
-  def +(that:Matrix):Matrix = {
-    if(this.numCols != that.numCols) throw new BadException("Cols don't match") 
-    if(this.numRows != that.numRows) throw new BadException("Cols don't match")
-    val out = new Matrix(numRows, numCols)
-    var i = 0; var j =0
-    for(i <- 0 until numRows){
-      for(j<- 0 until numCols){
-        out(i,j) = this(i,j) + that(i,j)
-      }
-    }
-    return out
-  }
-
-*/
 
 }
 
 
 object firstTry {
-  implicit def double2Scalar(d : Double) : Scalar = new Scalar(d)
+
 
   def main(args: Array[String]) {
-    val myMatrix = new Matrix(3,4);
+    val myMatrix = new Graph(13);
    //myMatrix.values(0)(0) = 1
    //myMatrix.values(0)(1) = 1
-   myMatrix(1,3) = 1
-    myMatrix(2,3) = 7
-    myMatrix(1,1) = 2
-  //myMatrix.values.foreach(println)
-println(myMatrix(1,1))
-   // myMatrix(1,0) = -2
-   // myMatrix(1,2) = Math.PI
-   // myMatrix.multiplyRow(0,2)
-   // myMatrix.addRow(0,1)
-    //myMatrix.switchRow(0,2)
-   myMatrix.printThis()
+    myMatrix(1,2) = 1 //ab
+    myMatrix(1,3) = 2 //ac
+    myMatrix(1,6) = 3 //af
+    myMatrix(1,7) = 4 //ag
+    myMatrix(4,5) = 5 //de
+    myMatrix(4,6) = 6 //df
+    myMatrix(5,6) = 7 //ef
+    myMatrix(5,7) = 8 //eg
+    myMatrix(8,9) = 9 //hi
+    myMatrix(10,11) = 10 //jk
+    myMatrix(10,12) = 11 //jl
+    myMatrix(10,13) = 12 //jm
+    myMatrix(12,13) = 13 //lm
+
+    myMatrix.printThis()
+    var z = myMatrix.connected(1)
+    z = myMatrix.connectedStack(1)
+    z = myMatrix.connectedQue(1)
+    println(z)
    // println(myMatrix(1,2))
 
  
