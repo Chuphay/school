@@ -132,7 +132,7 @@ class unionGraph(members:Array[String]) extends Graph(members.length){
   }
 
 
-  def connectedStack(a:String):List[Int] = {
+  def connectedStack(a:String):List[String] = {
 
     var a_index = members.indexWhere( _ == a)
 
@@ -149,7 +149,11 @@ class unionGraph(members:Array[String]) extends Graph(members.length){
         myStack = myStack.tail
       }
     }
-    out
+
+    var string_out = List[String]()
+    out.foreach(l => string_out = members(l-1)::string_out)
+    out.foreach(println)
+    string_out
   }
 
 
@@ -180,7 +184,9 @@ object tryThis {
 
     myMatrix.printThis()
     var z = myMatrix.connected(1)
+    println(z)
     z = myMatrix.connectedStack(1)
+    println(z)
     z = myMatrix.connectedQue(1)
     println(z)
    // println(myMatrix(1,2))
@@ -202,13 +208,15 @@ object tryThis {
     myGraph.union("f", "d")
     myGraph.union("h", "i")
     myGraph.union("f", "e")
+    myGraph.union("a", "f")
+    myGraph.union("g", "e")
 
     myGraph.printStructure()
 
     myGraph.printThis()
 
-    z = myGraph.connectedStack("a")
-    println(z)
+    var zz = myGraph.connectedStack("a")
+    println(zz)
  
 
 
