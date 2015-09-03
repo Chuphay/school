@@ -5,9 +5,7 @@ class myBad(m:String) extends Exception(m)
 
 
 class Graph(val numRows: Int) {
-  //implicit def double2Scalar(d : Double) : Scalar = new Scalar(d)
 
-  /*not sure why it's Matrix, really a graph*/ 
   var connections = new Array[List[Int]](numRows)
   for (i <- 0 until numRows) connections(i) = List()
   var values = Map[Tuple2[Int,Int], Double]()
@@ -89,6 +87,86 @@ class Graph(val numRows: Int) {
     return out
   }
 
+  def bad_min_spanning(start_node:Int):Double = {
+
+    var active_node = start_node - 1
+    var frontier_nodes = connections(active_node)
+    //class Node(num:Int, weight:Double)
+    class Tree(n:Int, w:Double){
+      var num_elements:Int = 1
+      var num:Int = n
+      var weight:Double = w
+      var bigger:Tree = this
+      var smaller:Tree = this
+      def myUpdate(n2:Int, w2:Double){
+        num_elements += 1
+
+        if(this.weight < w2){
+          println("bigger", this.weight, w2, this.num, n2)
+          if(bigger == this) {
+            val newTree = new Tree(n2, w2)
+            bigger = newTree
+          } else {
+            println("theoretically")
+            bigger.myUpdate(n2, w2)
+          }
+
+        } else {
+          println("smaller", this.weight, w2, this.num, n2)
+          if(smaller == this) {
+            if(bigger == this) {
+              val bigTree = new Tree(num, weight)
+              bigger = bigTree
+              num = n2
+              weight = w2
+            } else {
+              bigger.myUpdate(num,weight)
+              num = n2
+              weight = w2
+            }
+          } else {
+            smaller.myUpdate(n2, w2)
+          }
+        }
+      }
+      def popTop():Tree = {
+        if(num_elements <= 0) throw new myBad("zero elements")
+        num_elements -= 1
+        val temp_num = num
+        val temp_weight = weight
+        var temp_node = bigger
+        while (temp_node != temp_node.smaller) {
+          temp_node = temp_node.smaller       
+        }
+        bigger = temp_node.bigger
+        num = temp_node.num
+        weight = bigger.weight
+        return new Tree(temp_num, temp_weight)
+      }
+    }
+    val temp = frontier_nodes.head
+    var myTree = new Tree(temp, this(active_node+1, temp + 1))
+
+    for (x <- frontier_nodes.tail) {
+      //weights = this(active_node+1, x+1)::weights
+      myTree.myUpdate(x, this(active_node+1, x+1))
+    }
+    println("frontier")
+    println(frontier_nodes)
+    //println(weights)
+    var top = myTree.popTop()
+    println("top", top.num, top.weight, top.num_elements)
+    top = myTree.popTop()
+    println("top", top.num, top.weight, top.num_elements)
+    top = myTree.popTop()
+    println("top", top.num, top.weight, top.num_elements)
+    top = myTree.popTop()
+    println("top", top.num, top.weight, top.num_elements)
+
+
+    return 3.14
+  }
+
 }
 
 class unionGraph(members:Array[String]) extends Graph(members.length){
@@ -166,21 +244,36 @@ object tryThis {
 
   def main(args: Array[String]) {
     val myMatrix = new Graph(13);
-   //myMatrix.values(0)(0) = 1
-   //myMatrix.values(0)(1) = 1
+    //myMatrix.values(0)(0) = 1
+    //myMatrix.values(0)(1) = 1
+    //myMatrix(1,3) = 80 //ac
+   
+
     myMatrix(1,2) = 1 //ab
-    myMatrix(1,3) = 2 //ac
-    myMatrix(1,6) = 3 //af
-    myMatrix(1,7) = 4 //ag
-    myMatrix(4,5) = 5 //de
-    myMatrix(4,6) = 6 //df
-    myMatrix(5,6) = 7 //ef
-    myMatrix(5,7) = 8 //eg
-    myMatrix(8,9) = 9 //hi
-    myMatrix(10,11) = 10 //jk
-    myMatrix(10,12) = 11 //jl
-    myMatrix(10,13) = 12 //jm
-    myMatrix(12,13) = 13 //lm
+   
+    myMatrix(1,6) = 2 //af
+    myMatrix(1,7) = 6 //ag
+    
+    myMatrix(2,4) = 2 //bd
+    myMatrix(2,3) = 1 //bc
+    myMatrix(2,5) = 4 //be
+    myMatrix(3,5) = 4 //ce
+
+    myMatrix(4,5) = 2 //de
+    myMatrix(4,6) = 1 //df
+    myMatrix(5,6) = 2 //ef
+    myMatrix(5,7) = 1 //eg
+
+    myMatrix(6,12) = 2 //fl
+    myMatrix(7,8) = 3 //gh
+    myMatrix(7,10) = 1 //gj
+    myMatrix(7,12) = 5 //gl
+    myMatrix(8,9) = 2 //hi
+    myMatrix(9,11) = 1 //ik
+    myMatrix(10,11) = 1 //jk
+    myMatrix(10,12) = 3 //jl
+    myMatrix(10,13) = 2 //jm
+    myMatrix(12,13) = 1 //lm
 
     myMatrix.printThis()
     var z = myMatrix.connected(1)
@@ -217,6 +310,8 @@ object tryThis {
 
     var zz = myGraph.connectedStack("a")
     println(zz)
+
+    myMatrix.bad_min_spanning(1)
  
 
 
