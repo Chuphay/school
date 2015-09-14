@@ -160,8 +160,23 @@ class Graph(val numRows: Int) {
     println("top", top.num, top.weight, top.num_elements)
     top = myTree.popTop()
     println("top", top.num, top.weight, top.num_elements)
-    top = myTree.popTop()
-    println("top", top.num, top.weight, top.num_elements)
+    //top = myTree.popTop()
+    //println("top", top.num, top.weight, top.num_elements)
+
+
+    return 3.14
+  }
+
+  def worse_min_spanning(start_node:Int):Double = {
+
+    var active_node = start_node - 1
+    var frontier_nodes = connections(active_node)
+
+    for (x <- frontier_nodes) {
+      println(x, values(active_node+1, x+1))
+    }
+
+    /*hmmm .... this is actually crazy hard */
 
 
     return 3.14
@@ -312,6 +327,7 @@ object tryThis {
     println(zz)
 
     myMatrix.bad_min_spanning(1)
+    myMatrix.worse_min_spanning(1)
  
 
 
