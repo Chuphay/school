@@ -1,0 +1,5 @@
+For problem 46 here is the dataset whale.txt and four R programs, one using uniroot( ), and the others using the nlmib( ), nlm( ), and mle( ) functions.  Note the use of the scan( ) function to read in the data from the txt file.
+whale1.R    computes the mle using uniroot( )
+whale2.R    computes the mle using nlminb( )
+whale3.R    computes the mle using nlm( )
+whale4.R    computes the mle using mle( ), a function in library(stats4)
