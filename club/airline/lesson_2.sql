@@ -30,22 +30,22 @@ as Similarity, DepDelay, ArrDelay FROM ontime ORDER BY Similarity DESC LIMIT 15;
 /*Nice a ton of seperation on that last example. Let's play with it a bit*/
 
 /*We are going to make a view, which is the same thing as a table, but a little more temporary*/
-/*
+
 CREATE VIEW flt347 AS SELECT 0.4*(Month=1) + 1.3*(DayofMonth=24) + 0.7*(DayofWeek=2) + 
 2.1*(abs(CRSDepTime - 1850) < 20) + 1.6*(abs(CRSElapsedTime - 46) < 20) +
 1.5*(UniqueCarrier = "NW") + 0.4*(FlightNum = 347) + 1.9*(Origin = "MBS") + 1.7*(Dest = "DTW") 
 as Similarity, DepDelay, ArrDelay FROM ontime ORDER BY Similarity DESC LIMIT 15;
-*/
+
 SELECT avg(DepDelay), avg(ArrDelay) FROM flt347;
 
 /*Nice that gives us the average DepDelay and ArrDelay from flt347*/
 /*We can do some cool other analysis, but let's try one of the flights that has a long delay*/
-/*
+
 CREATE VIEW flt515 AS SELECT 0.4*(Month=3) + 1.3*(DayofMonth=23) + 0.7*(DayofWeek=4) + 
 2.1*(abs(CRSDepTime - 955) < 20) + 1.6*(abs(CRSElapsedTime - 155) < 20) +
 1.5*(UniqueCarrier = "CO") + 0.4*(FlightNum = 515) + 1.9*(Origin = "CLE") + 1.7*(Dest = "TPA") 
 as Similarity, DepDelay, ArrDelay FROM ontime ORDER BY Similarity DESC LIMIT 15;
-*/
+
 SELECT * FROM flt515;
 
 SELECT avg(DepDelay), avg(ArrDelay) FROM flt515;
