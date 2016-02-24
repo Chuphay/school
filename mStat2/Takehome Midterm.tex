@@ -1,0 +1,564 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass{article}
+
+    
+    
+    \usepackage{graphicx} % Used to insert images
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{color} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    
+
+    
+    
+    \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+    \definecolor{darkorange}{rgb}{.71,0.21,0.01}
+    \definecolor{darkgreen}{rgb}{.12,.54,.11}
+    \definecolor{myteal}{rgb}{.26, .44, .56}
+    \definecolor{gray}{gray}{0.45}
+    \definecolor{lightgray}{gray}{.95}
+    \definecolor{mediumgray}{gray}{.8}
+    \definecolor{inputbackground}{rgb}{.95, .95, .85}
+    \definecolor{outputbackground}{rgb}{.95, .95, .95}
+    \definecolor{traceback}{rgb}{1, .95, .95}
+    % ansi colors
+    \definecolor{red}{rgb}{.6,0,0}
+    \definecolor{green}{rgb}{0,.65,0}
+    \definecolor{brown}{rgb}{0.6,0.6,0}
+    \definecolor{blue}{rgb}{0,.145,.698}
+    \definecolor{purple}{rgb}{.698,.145,.698}
+    \definecolor{cyan}{rgb}{0,.698,.698}
+    \definecolor{lightgray}{gray}{0.5}
+    
+    % bright ansi colors
+    \definecolor{darkgray}{gray}{0.25}
+    \definecolor{lightred}{rgb}{1.0,0.39,0.28}
+    \definecolor{lightgreen}{rgb}{0.48,0.99,0.0}
+    \definecolor{lightblue}{rgb}{0.53,0.81,0.92}
+    \definecolor{lightpurple}{rgb}{0.87,0.63,0.87}
+    \definecolor{lightcyan}{rgb}{0.5,1.0,0.83}
+    
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Takehome Midterm}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=blue,
+      linkcolor=darkorange,
+      citecolor=darkgreen,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{pylab} inline
+        \PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} rpy2.ipython
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Populating the interactive namespace from numpy and matplotlib
+    \end{Verbatim}
+
+    \section{Take Home Midterm}\label{take-home-midterm}
+
+\subsubsection{David Plotz}\label{david-plotz}
+
+ 
+
+    1.) We are interested in knowing if the number of defective iPhones
+produced by Apple on a given day follows a Poisson distribution. In a
+random sample of 630 days, we get the following summarized data.
+
+0
+
+1
+
+2
+
+3
+
+\$\geq\$4
+
+191
+
+228
+
+141
+
+51
+
+19
+
+(a) Write out the appropriate hypotheses to test.
+
+$H_0$ : the number of defective iPhones produced on a given day follows
+a Poisson distribution.
+
+vs.
+
+$H_1$ : the number of defective iPhones produced on a given day follows
+a distribution that is not the Poisson distribution.
+
+(b) Find the MLE of λ under $H_0$.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+        observed \PYZlt{}\PYZhy{} c(191, 228, 141, 51, 19)
+        n \PYZlt{}\PYZhy{} sum(observed)
+        lik \PYZlt{}\PYZhy{} function(lambda) \PYZob{}
+            dmultinom(x=observed, size=n, prob=c(dpois(x=0:3, lambda=lambda), 1\PYZhy{}ppois(q=3, lambda=lambda)))
+        \PYZcb{}
+        mle \PYZlt{}\PYZhy{} optimize(f=lik, interval=c(0, 3), maximum=TRUE)
+        mle
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+$maximum
+[1] 1.181387
+
+$objective
+[1] 6.476957e-06
+
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+        x \PYZlt{}\PYZhy{} 0:6
+        plot(x, n*dpois(x, lambda = mle\PYZdl{}max))
+        lines(0:4, observed)
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Takehome Midterm_files/Takehome Midterm_4_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We can also try doing this in Python.
+
+I used squared error as my cost function. I'm not sure what difference
+that makes\ldots{}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k}{import} \PY{n}{minimize}
+        \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{poisson}
+        
+        \PY{n}{observed}  \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{191}\PY{p}{,} \PY{l+m+mi}{228}\PY{p}{,} \PY{l+m+mi}{141}\PY{p}{,} \PY{l+m+mi}{51}\PY{p}{,} \PY{l+m+mi}{19}\PY{p}{]}
+        \PY{n}{n} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{observed}\PY{p}{)}
+        \PY{k}{def} \PY{n+nf}{minimize\PYZus{}this}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{:}
+            \PY{n}{out} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{observed}\PY{p}{)}\PY{p}{)}\PY{p}{:}        
+                \PY{n}{prob} \PY{o}{=} \PY{n}{n}\PY{o}{*}\PY{n}{poisson}\PY{o}{.}\PY{n}{pmf}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{p}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{observed}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{prob} \PY{o}{=} \PY{n}{n}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{poisson}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{)}     
+                \PY{n}{out} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{n}{observed}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{prob}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}    \PY{c}{\PYZsh{}squared error}
+            \PY{k}{return} \PY{n}{out}
+        
+        \PY{n}{minimize}\PY{p}{(}\PY{n}{minimize\PYZus{}this}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{[}\PY{l+s}{\PYZsq{}}\PY{l+s}{x}\PY{l+s}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} array([ 1.19515839])
+\end{Verbatim}
+        
+    With a little further thought, we can attempt to minimize the test
+statistic directly
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{minimize\PYZus{}this}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{:}
+            \PY{n}{out} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{observed}\PY{p}{)}\PY{p}{)}\PY{p}{:}        
+                \PY{n}{expected} \PY{o}{=} \PY{n}{n}\PY{o}{*}\PY{n}{poisson}\PY{o}{.}\PY{n}{pmf}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{p}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{observed}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{expected} \PY{o}{=} \PY{n}{n}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{poisson}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{)}     
+                \PY{n}{out} \PY{o}{+}\PY{o}{=} \PY{n}{observed}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{log}\PY{p}{(}\PY{n}{observed}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{/}\PY{n}{expected}\PY{p}{)}
+            \PY{k}{return} \PY{n}{out}
+        
+        \PY{n}{minimize}\PY{p}{(}\PY{n}{minimize\PYZus{}this}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{[}\PY{l+s}{\PYZsq{}}\PY{l+s}{x}\PY{l+s}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} array([ 1.18138193])
+\end{Verbatim}
+        
+    (c) Calculate the expected counts.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+        x \PYZlt{}\PYZhy{} 0:3
+        expected \PYZlt{}\PYZhy{} n*c(dpois(x, lambda = mle\PYZdl{}max), 1 \PYZhy{} ppois(3,lambda = mle\PYZdl{}max))
+        expected
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] 193.31736 228.38254 134.90404  53.12461  20.27144
+
+    \end{verbatim}
+
+    
+    (d) Calculate the appropriate test statistic and state its distribution
+under $H_0$.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+        2*sum(observed*log(observed/expected))
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] 0.4675273
+
+    \end{verbatim}
+
+    
+    Due to large sample theory, we know that $−2lnΛ= 0.4675$ under $H_0$
+follows $\chi_3^2$. (The degrees of freedom is the number of bins, m=5,
+minus 1, minus the number parameters estimated (i.e. $\hat{λ}$))
+
+    (e) Calculate the p−value of this test and make you conclusions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+        1 \PYZhy{} pchisq(0.4675273, 3)
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] 0.9259654
+
+    \end{verbatim}
+
+    
+    Wiht a p-value of 0.926, we fail to reject the null hypothesis and
+conclude that the fit is good.
+
+    2.) A random sample of size 100 is taken from a gamma population with
+shape parameter 3 and scale parameter β, having p.d.f.
+
+\[f(x) = \frac 1 {Γ(3)β^3} x^2 e^{−x/β}, ~~~~ x > 0, ~~~ β > 0\]
+
+We wish to test the null hypothesis $H_0 : β = β_0 = 5$ against the
+simple alternative hypothesis $H_1 : β = β_1 > β_0$.
+
+(a) Simulate 100 observations from this gamma distribution with scale β
+= 6. Be sure to state the seed you are using and make the seed
+{[}set.seed(){]} ``unusual''. Report the mean of your simulated data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R} 
+        set.seed(1213)
+        data \PYZlt{}\PYZhy{} rgamma(100,shape = 3, scale = 6)
+        mean(data)
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] 17.1719
+
+    \end{verbatim}
+
+    
+    (b) Perform the most powerful hypothesis test using this data at level α
+= 0.05 (do not use the large sample approximation).
+
+    We first write down the likelihood ratio:
+
+\[\text{likelihood ratio} = \left(\frac {\beta_1}{\beta_0} \right)^{3n} \exp [- \sum X_i (\frac 1 {\beta_0} - \frac 1 {\beta_1} )]\]
+
+We know that we will reject $H_0$ when the likelihood ratio is small,
+i.e., when $\sum X_i$ is big.
+
+We are therefore are looking for a number c such that:
+
+\[\alpha = 0.05 = \mathbb{P}(\sum X_i > c | H_0)\]
+
+According to Wikipedia, the sum of independent gamma random variables is
+also distributed as gamma, but with the shape parameter summed.
+Therefore, our test statistic is
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+         qgamma(0.95, shape=300, scale=5)
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] 1645.234
+
+    \end{verbatim}
+
+    
+    To test on our data, we simply check whether the sample sum is greater
+or less than this number:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+         sum(data) \PYZgt{} 1645.234
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] TRUE
+
+    \end{verbatim}
+
+    
+    We therefore reject the null hypothesis.
+
+    (c) Calculate the power of the test if β = 6.
+
+    \[\text{power} = 1 - \beta = 1 - \mathbb{P}(\text{accept } H_0 | H_1) = \mathbb{P}(\text{reject } H_0 | H_1)= 1 - \mathbb{P}(\sum X_i \leq 1645.234 | H_1)\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+         1 \PYZhy{} pgamma(1645.234, shape = 300, scale = 6)
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] 0.9350895
+
+    \end{verbatim}
+
+    
+    (d) Repeat part (b) 1000 times and calculate the proportion of times you
+reject $H_0$. Are you surprised by your answer? Explain.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R} 
+         out \PYZlt{}\PYZhy{} numeric(1000)
+         for (i in 1:1000)\PYZob{}
+             data \PYZlt{}\PYZhy{} rgamma(100,shape = 3, scale = 5)
+             if(sum(data) \PYZlt{} 1645.234)\PYZob{}
+                 out[i] \PYZlt{}\PYZhy{} 1
+             \PYZcb{}
+         \PYZcb{}
+         1 \PYZhy{} sum(out)/1000
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+[1] 0.043
+
+    \end{verbatim}
+
+    
+    We are rejecting about 5\% of the samples. This is what we expected.
+
+    (e) Plot the power function of this test as a function of $β_1$. What
+value of $β_1$ is necessary to achieve a power of at least 0.8 (this
+needs to be solved numerically, not by looking at the plot)?
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+         x \PYZlt{}\PYZhy{} seq(4.5,6.5, by = 0.1)
+         plot(x, 1 \PYZhy{} pgamma(1645.234, shape = 300, scale = x), type = \PYZsq{}l\PYZsq{})
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Takehome Midterm_files/Takehome Midterm_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{R}
+         minimize\PYZus{}this \PYZlt{}\PYZhy{} function(p)\PYZob{}
+             abs(0.8 \PYZhy{} 1 + pgamma(1645.234, shape = 300, scale = p))
+         \PYZcb{}
+         optimize(f = minimize\PYZus{}this, interval =c(5,6))
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+$minimum
+[1] 5.765994
+
+$objective
+[1] 4.761707e-07
+
+
+    \end{verbatim}
+
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
