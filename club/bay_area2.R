@@ -5,7 +5,10 @@
 #  @since   2015-05-06 
 # 
 
-#cities <- c("Berkeley", "Hayward", "San Jose", "Palo Alto", "San Francisco")
+library(ggmap)
+library(ggplot2)
+
+
 cities <- c("San Rafael", "Novato","Vallejo","Pinole",
             "Concord", "Richmond","Walnut Creek", "Berkeley",
             "Oakland","San Leandro","Hayward",
@@ -201,7 +204,6 @@ AStar <- function(start, end) {
 }
 
 
-AStar("Berkeley","San Jose")
 
 from_path_make_map <- function(path){
   d <- data.frame(lat = c(), lon=c())
@@ -214,3 +216,6 @@ from_path_make_map <- function(path){
   p <- p + geom_point(data=d, aes(x=lon, y=lat),color="red",size=3)
   p + geom_path(data=d, aes(x=lon, y=lat), color="black", size=1)
 }
+
+a <- AStar("Berkeley","San Jose")
+from_path_make_map(a)
